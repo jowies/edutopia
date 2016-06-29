@@ -1,7 +1,11 @@
 import React from 'react';
+import { Button, Appbar, Container } from 'muicss/react';
 
 export const Home = () => (
   <div>
-    <h1>Edutopia</h1>
+    <Appbar>K</Appbar>
+    <Container>
+      <Button color="primary">button</Button>
+    </Container>
   </div>
 );
