@@ -21,3 +21,11 @@ react-meteor-data
 kadira:flow-router
 fourseven:scss
 seba:minifiers-autoprefixer
+aldeed:simple-schema
+underscore
+mdg:validated-method
+ddp-rate-limiter
+accounts-base
+aldeed:collection2
+dburles:collection-helpers
+accounts-password

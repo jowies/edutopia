@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const HomePage = ({ content }) => (
+const HomePage = ({ content }) => (
   <div>
     {content}
   </div>
@@ -9,3 +9,5 @@ export const HomePage = ({ content }) => (
 HomePage.propTypes = {
   content: React.PropTypes.object,
 };
+
+export default HomePage;

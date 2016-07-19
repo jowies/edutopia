@@ -1,2 +1,19 @@
 /* CSS declarations go here d*/
+.layouttest {
+  background: url('/bilde.jpg') center/cover;
+}
 
+.demo-card-square.mdl-card {
+  width: 320px;
+  height: 320px;
+}
+.demo-card-square > .mdl-card__title {
+  color: #fff;
+  background:
+    url('logo.svg') bottom right 15% no-repeat #46B6AC;
+}
+
+.center {
+  margin: auto;
+  text-align: center;
+}
