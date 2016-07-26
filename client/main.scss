@@ -1,4 +1,7 @@
 /* CSS declarations go here d*/
+html, body {
+  font-family: 'Roboto', 'Helvetica', sans-serif;
+}
 .layouttest {
   background: url('/bilde.jpg') center/cover;
 }
@@ -16,4 +19,55 @@
 .center {
   margin: auto;
   text-align: center;
+}
+
+a.dashboard-title {
+  color: inherit;
+  text-decoration: none;
+  font-weight: normal;
+}
+
+a.dashboard-title:hover 
+{
+  color: inherit; 
+  text-decoration: underline;
+  font-weight: normal;
+}
+
+.drawer {
+  border: none;
+}
+
+.navigation {
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+.layout .navigation .mdl-navigation__link {
+  display: -webkit-flex !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #AED581;
+  font-weight: 500;
+}
+
+.navigation .mdl-navigation__link .material-icons {
+  font-size: 24px;
+  color: inherit;
+  margin-right: 32px;
+}
+
+.layout .navigation .mdl-navigation__link:hover {
+  background-color: #AED581;
+  color: #33691E;
+}
+
+.layout .mdl-layout__header .mdl-layout__drawer-button {
+  color: rgba(0, 0, 0, 0.54);
 }

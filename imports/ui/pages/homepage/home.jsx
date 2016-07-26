@@ -1,5 +1,5 @@
 import React from 'react';
-import Upgrade from '../../helpers/upgrade.jsx';
+import upgrade from '../../helpers/upgrade.jsx';
 
 
 export default class Home extends React.Component {
@@ -9,13 +9,15 @@ export default class Home extends React.Component {
   }
 
   componentDidMount() {
-    Upgrade.upgrade('mdl-js-layout', this.refs.layout);
-    Upgrade.upgrade('mdl-js-button', this.refs.signup);
+    upgrade(this.refs.layout);
+    upgrade(this.refs.signup);
+    upgrade(this.refs.login);
   }
 
   componentDidUpdate() {
-    Upgrade.upgrade('mdl-js-layout', this.refs.layout);
-    Upgrade.upgrade('mdl-js-layout', this.refs.signup);
+    upgrade(this.refs.layout);
+    upgrade(this.refs.signup);
+    upgrade(this.refs.login);
   }
 
 
@@ -58,8 +60,10 @@ export default class Home extends React.Component {
                   <div className="center">
                     <button
                       className="mdl-button
-                        mdl-button--colored
                         mdl-button--raised
+                        mdl-button--colored
+                        mdl-color--light-green-500
+                        mdl-color-text--light-green-50
                         mdl-js-button
                         mdl-js-ripple-effect"
                       ref="signup"
@@ -75,11 +79,11 @@ export default class Home extends React.Component {
                   <div className="center">
                     <button
                       className="mdl-button
-                        mdl-button--accent
+                        mdl-button--primary
                         mdl-button--raised
                         mdl-js-button
                         mdl-js-ripple-effect"
-                      ref="signup"
+                      ref="login"
                     >
                       Log in
                     </button>

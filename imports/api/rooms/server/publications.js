@@ -6,10 +6,6 @@ Meteor.publish('rooms.createdByUser', function roomsUser() {
 });
 
 Meteor.publish('rooms.joinedByUser', function roomsJoined() {
-  return Rooms.find({
-    createdBy: { $exists: false },
-  }, {
-    joined: this.userId,
-  });
+  return Rooms.find({ joinedBy: this.userId }, { createdBy: 0 });
 });
 

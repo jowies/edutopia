@@ -4,7 +4,9 @@ import { mount } from 'react-mounter';
 import HomePage from '../../ui/pages/homepage.jsx';
 import Home from '../../ui/pages/homepage/home.jsx';
 import Dashboard from '../../ui/layouts/dashboard.jsx';
-// import ListContainer from '../../ui/containers/listcontainer.jsx';
+import MyRoomsListContainer from '../../ui/containers/myroomslistcontainer.jsx';
+import JoinedRoomsListContainer from '../../ui/containers/joinedroomslistcontainer.jsx';
+
 
 FlowRouter.route('/', {
   action() {
@@ -14,7 +16,18 @@ FlowRouter.route('/', {
 
 FlowRouter.route('/dashboard', {
   action() {
-    mount(Dashboard, {});
+    mount(Dashboard);
   },
 });
 
+FlowRouter.route('/dashboard/myrooms', {
+  action() {
+    mount(Dashboard, { content: <MyRoomsListContainer />, path: 'My Rooms' });
+  },
+});
+
+FlowRouter.route('/dashboard/joinedrooms', {
+  action() {
+    mount(Dashboard, { content: <JoinedRoomsListContainer />, path: 'Joined rooms' });
+  },
+});

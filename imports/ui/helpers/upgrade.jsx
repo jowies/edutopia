@@ -2,7 +2,6 @@
 export const MaterialJSClass = {
   'mdl-js-layout': 'MaterialLayout',
   'mdl-js-data-table': 'MaterialDataTable',
-  'mdl-js-ripple-effect': 'MaterialRipple',
   'mdl-js-button': 'MaterialButton',
   'mdl-js-checkbox': 'MaterialCheckbox',
   'mdl-js-icon-toggle': 'MaterialIconToggle',
@@ -16,12 +15,17 @@ export const MaterialJSClass = {
   'mdl-js-tabs': 'MaterialTabs',
   'mdl-js-textfield': 'MaterialTextfield',
   'mdl-tooltip': 'MaterialTooltip',
+  'mdl-js-ripple-effect': 'MaterialRipple',
+
 };
 
-export const upgrade = (classNames, ref) => {
+const upgrade = (ref) => {
   for (const key of Object.keys(MaterialJSClass)) {
-    if (classNames.indexOf(key) >= 0) {
+    if (ref.className.indexOf(key) >= 0) {
+      console.log(key);
       componentHandler.upgradeElement(ref, MaterialJSClass[key]);
     }
   }
 };
+
+export default upgrade;

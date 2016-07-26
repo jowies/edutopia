@@ -36,7 +36,8 @@
       "import/resolver": "meteor"
     },
     "rules": {
-      "no-underscore-dangle": ["error", { "allowAfterThis": true }]
+      "no-underscore-dangle": ["error", { "allowAfterThis": true }],
+      "no-underscore-dangle": ["error", { "allow": ["_id"] }]
     }
   }
 }
