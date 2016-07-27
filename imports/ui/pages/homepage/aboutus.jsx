@@ -11,6 +11,10 @@ export default class AboutUs extends React.Component {
     upgrade(this.refs.layout1);
   }
 
+  componentWillUnmount() {
+    componentHandler.downgradeElements(this.refs.layout1);
+  }
+
   render() {
     return (
       <div className="mdl-layout mdl-js-layout layouttest" ref="layout1">
