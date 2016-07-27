@@ -1,5 +1,6 @@
 import React from 'react';
 import upgrade from '../../helpers/upgrade.jsx';
+import { FlowRouter } from 'meteor/kadira:flow-router';
 
 
 export default class Home extends React.Component {
@@ -20,6 +21,9 @@ export default class Home extends React.Component {
     upgrade(this.refs.login);
   }
 
+  logIn() {
+    FlowRouter.go('/dashboard');
+  }
 
   render() {
     return (
@@ -30,22 +34,20 @@ export default class Home extends React.Component {
             <span className="mdl-layout__title">Edutopia</span>
             <div className="mdl-layout-spacer"></div>
             <nav className="mdl-navigation">
-              <a className="mdl-navigation__link" href="#">Hello</a>
-              <a className="mdl-navigation__link" href="#">World.</a>
-              <a className="mdl-navigation__link" href="#">How</a>
-              <a className="mdl-navigation__link" href="#">Are</a>
-              <a className="mdl-navigation__link" href="#">You?</a>
+              <a className="mdl-navigation__link" href="/">Home</a>
+              <a className="mdl-navigation__link" href="/aboutus">About Edutopia</a>
+              <a className="mdl-navigation__link" href="/contact">Contact</a>
+              <a className="mdl-navigation__link" href="#">Get started</a>
             </nav>
           </div>
         </header>
         <div className="mdl-layout__drawer">
           <span className="mdl-layout__title">Edutopia</span>
           <nav className="mdl-navigation">
-            <a className="mdl-navigation__link" href="#">Hello</a>
-            <a className="mdl-navigation__link" href="#">World.</a>
-            <a className="mdl-navigation__link" href="#">How</a>
-            <a className="mdl-navigation__link" href="#">Are</a>
-            <a className="mdl-navigation__link" href="#">You?</a>
+            <a className="mdl-navigation__link" href="/">Home</a>
+            <a className="mdl-navigation__link" href="/aboutus">About Edutopia</a>
+            <a className="mdl-navigation__link" href="/contact">Contact</a>
+            <a className="mdl-navigation__link" href="#">Get started</a>
           </nav>
         </div>
         <main className="mdl-layout__content">
@@ -53,7 +55,7 @@ export default class Home extends React.Component {
             <div className="mdl-cell mdl-cell--4-col">
             </div>
             <div className="mdl-cell mdl-cell--4-col">
-              <div className="center demo-card-square mdl-card mdl-shadow--2dp">
+              <div className="center demo-card-square mdl-card mdl-shadow--2dp" style={{ width: '320px' }}>
                 <div className="mdl-card__title mdl-card--expand">
                 </div>
                 <div className="mdl-card__actions">
@@ -78,6 +80,7 @@ export default class Home extends React.Component {
                 <div className="mdl-card__actions">
                   <div className="center">
                     <button
+                      onClick={this.logIn}
                       className="mdl-button
                         mdl-button--primary
                         mdl-button--raised

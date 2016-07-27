@@ -6,7 +6,8 @@ import Home from '../../ui/pages/homepage/home.jsx';
 import Dashboard from '../../ui/layouts/dashboard.jsx';
 import MyRoomsListContainer from '../../ui/containers/myroomslistcontainer.jsx';
 import JoinedRoomsListContainer from '../../ui/containers/joinedroomslistcontainer.jsx';
-
+import AboutUs from '../../ui/pages/homepage/aboutus.jsx';
+import Contact from '../../ui/pages/homepage/contact.jsx';
 
 FlowRouter.route('/', {
   action() {
@@ -29,5 +30,17 @@ FlowRouter.route('/dashboard/myrooms', {
 FlowRouter.route('/dashboard/joinedrooms', {
   action() {
     mount(Dashboard, { content: <JoinedRoomsListContainer />, path: 'Joined rooms' });
+  },
+});
+
+FlowRouter.route('/aboutus', {
+  action() {
+    mount(HomePage, { content: <AboutUs />, path: 'About Edutopia' });
+  },
+});
+
+FlowRouter.route('/contact', {
+  action() {
+    mount(HomePage, { content: <Contact />, path: 'Contact' });
   },
 });
