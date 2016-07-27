@@ -1,43 +1,31 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import upgrade from '../helpers/upgrade.jsx';
+
 
 export default class Button extends React.Component {
   constructor(props) {
     super(props);
   }
   componentDidMount() {
-    console.log(this.props.ripple);
-    const element = this.refs.button;
-    componentHandler.upgradeElement(element, 'MaterialButton');
-    if (this.props.ripple) {
-      componentHandler.upgradeElement(element, 'MaterialRipple');
-    }
+    upgrade(this.refs.button);
   }
 
   componentDidUpdate() {
-    const element = this.refs.button;
-    componentHandler.upgradeElement(element, 'MaterialButton');
-    if (this.props.ripple) {
-      componentHandler.upgradeElement(element, 'MaterialRipple');
-    }
-  }
-
-  jsClass() {
-    if (this.props.ripple) {
-      return ( ' mdl-js-button mdl-js-ripple-effect' + this.props.className);
-    }
-    return ( ' mdl-js-button' + this.props.className);
+    upgrade(this.refs.button);
   }
 
   render() {
     return (
-      <Button
+      <button
+        className="mdl-button
+          mdl-button--primary
+          mdl-button--raised
+          mdl-js-button
+          mdl-js-ripple-effect"
         ref="button"
-        onClick={this.props.onClick}
-        className={this.jsClass()}
       >
-        {this.props.children}
-      </Button>
+        Log in
+      </button>
     );
   }
 }

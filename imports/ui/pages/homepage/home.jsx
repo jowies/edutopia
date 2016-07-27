@@ -21,6 +21,10 @@ export default class Home extends React.Component {
     upgrade(this.refs.login);
   }
 
+  componentWillUnmount() {
+    componentHandler.downgradeElements([this.refs.layout, this.refs.signup, this.refs.login]);
+  }
+
   logIn() {
     FlowRouter.go('/dashboard');
   }

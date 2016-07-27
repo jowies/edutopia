@@ -35,12 +35,12 @@ FlowRouter.route('/dashboard/joinedrooms', {
 
 FlowRouter.route('/aboutus', {
   action() {
-    mount(HomePage, { content: <AboutUs />, path: 'About Edutopia' });
+    mount(HomePage, { content: <AboutUs /> });
   },
 });
 
 FlowRouter.route('/contact', {
   action() {
-    mount(HomePage, { content: <Contact />, path: 'Contact' });
+    mount(HomePage, { content: <Contact /> });
   },
 });

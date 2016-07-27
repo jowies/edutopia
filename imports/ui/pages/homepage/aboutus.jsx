@@ -4,16 +4,16 @@ import upgrade from '../../helpers/upgrade.jsx';
 export default class AboutUs extends React.Component {
 
   componentDidMount() {
-    upgrade(this.refs.layout);
+    upgrade(this.refs.layout1);
   }
 
   componentDidUpdate() {
-    upgrade(this.refs.layout);
+    upgrade(this.refs.layout1);
   }
 
   render() {
     return (
-      <div className="mdl-layout mdl-js-layout layouttest" ref="layout">
+      <div className="mdl-layout mdl-js-layout layouttest" ref="layout1">
         <header className="mdl-layout__header mdl-layout__header--scroll">
           <div className="mdl-layout-icon"></div>
           <div className="mdl-layout__header-row">
@@ -21,8 +21,8 @@ export default class AboutUs extends React.Component {
             <div className="mdl-layout-spacer"></div>
             <nav className="mdl-navigation">
               <a className="mdl-navigation__link" href="/">Home</a>
-              <a className="mdl-navigation__link" href="/AboutUs">About Edutopia</a>
-              <a className="mdl-navigation__link" href="/Contact">Contact</a>
+              <a className="mdl-navigation__link" href="/aboutus">About Edutopia</a>
+              <a className="mdl-navigation__link" href="/contact">Contact</a>
               <a className="mdl-navigation__link" href="#">Get started</a>
             </nav>
           </div>
@@ -31,8 +31,8 @@ export default class AboutUs extends React.Component {
           <span className="mdl-layout__title">Edutopia</span>
           <nav className="mdl-navigation">
             <a className="mdl-navigation__link" href="/">Home</a>
-            <a className="mdl-navigation__link" href="/AboutUs">About Edutopia</a>
-            <a className="mdl-navigation__link" href="/Contact">Contact</a>
+            <a className="mdl-navigation__link" href="/aboutus">About Edutopia</a>
+            <a className="mdl-navigation__link" href="/contact">Contact</a>
             <a className="mdl-navigation__link" href="#">Get started</a>
           </nav>
         </div>
