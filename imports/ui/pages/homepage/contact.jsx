@@ -13,25 +13,30 @@ const Contact = () => (
         <div className="center demo-card-square mdl-card mdl-shadow--2dp">
           <div className="mdl-card__title mdl-card--expand">
             <div className="center mdl-card__subtitle-text">
-            <h1>Send us a message</h1>
+              <h1>Send us a message</h1>
             </div>
           </div>
           <div className="mdl-card__actions">
             <div className="center">
-            <form>
-            <div className="mdl-textfield mdl-js-textfield">
-              <input className="mdl-textfield__input" type="text" id="sample1" />
-              <label className="mdl-textfield__label" htmlFor="sample1">Name...</label>
-            </div>
-            <div className="mdl-textfield mdl-js-textfield">
-              <input className="mdl-textfield__input" type="text" id="sample1" />
-              <label className="mdl-textfield__label" htmlFor="sample1">email...</label>
-            </div>
-            <div className="mdl-textfield mdl-js-textfield">
-              <textarea className="mdl-textfield__input" type="text" rows="3" id="sample5" ></textarea>
-              <label className="mdl-textfield__label" htmlFor="sample5">Comment...</label>
-            </div>
-            </form>
+              <form>
+                <div className="mdl-textfield mdl-js-textfield">
+                  <input className="mdl-textfield__input" type="text" id="sample1" />
+                  <label className="mdl-textfield__label" htmlFor="sample1">Name...</label>
+                </div>
+                <div className="mdl-textfield mdl-js-textfield">
+                  <input className="mdl-textfield__input" type="text" id="sample1" />
+                  <label className="mdl-textfield__label" htmlFor="sample1">email...</label>
+                </div>
+                <div className="mdl-textfield mdl-js-textfield">
+                  <textarea
+                    className="mdl-textfield__input"
+                    type="text"
+                    rows="3"
+                    id="sample5"
+                  ></textarea>
+                  <label className="mdl-textfield__label" htmlFor="sample5">Comment...</label>
+                </div>
+              </form>
             </div>
           </div>
         </div>

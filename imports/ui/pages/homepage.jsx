@@ -1,5 +1,5 @@
 import React from 'react';
-import upgrade from '../helpers/upgrade.jsx';
+import { upgrade, downgrade } from '../helpers/upgrade.jsx';
 
 export default class HomePage extends React.Component {
 
@@ -9,6 +9,10 @@ export default class HomePage extends React.Component {
 
   componentDidUpdate() {
     upgrade(this.refs.layout);
+  }
+
+  componentWillUnmount() {
+    downgrade(this.refs.layout);
   }
 
   render() {

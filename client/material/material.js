@@ -401,6 +401,11 @@ componentHandler = (function() {
 
   // Now return the functions that should be made public with their publicly
   // facing names...
+
+  function getNodes() {
+    return createdComponents_;
+  }
+
   return {
     upgradeDom: upgradeDomInternal,
     upgradeElement: upgradeElementInternal,
@@ -408,7 +413,8 @@ componentHandler = (function() {
     upgradeAllRegistered: upgradeAllRegisteredInternal,
     registerUpgradedCallback: registerUpgradedCallbackInternal,
     register: registerInternal,
-    downgradeElements: downgradeNodesInternal
+    downgradeElements: downgradeNodesInternal,
+    getNodes: getNodes
   };
 })();
 

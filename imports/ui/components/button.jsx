@@ -1,5 +1,5 @@
 import React from 'react';
-import upgrade from '../helpers/upgrade.jsx';
+import { upgrade, downgrade } from '../helpers/upgrade.jsx';
 
 
 export default class Button extends React.Component {
@@ -12,6 +12,10 @@ export default class Button extends React.Component {
 
   componentDidUpdate() {
     upgrade(this.refs.button);
+  }
+
+  componentWillUnmount() {
+    downgrade(this.refs.button);
   }
 
   render() {

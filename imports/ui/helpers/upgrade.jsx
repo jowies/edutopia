@@ -19,13 +19,17 @@ export const MaterialJSClass = {
 
 };
 
-const upgrade = (ref) => {
-  for (const key of Object.keys(MaterialJSClass)) {
-    if (ref.className.indexOf(key) >= 0) {
-      console.log(key);
-      componentHandler.upgradeElement(ref, MaterialJSClass[key]);
+export const upgrade = (...elements) => {
+  for (let i = 0; i < elements.length; i++) {
+    for (const key of Object.keys(MaterialJSClass)) {
+      if (elements[i].className.indexOf(key) >= 0) {
+        console.log(key);
+        componentHandler.upgradeElement(elements[i], MaterialJSClass[key]);
+      }
     }
   }
 };
 
-export default upgrade;
+export const downgrade = (...elements) => {
+  componentHandler.downgradeElements(elements);
+};

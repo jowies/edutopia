@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '../../components/button.jsx';
-import upgrade from '../../helpers/upgrade.jsx';
+import { upgrade, downgrade } from '../../helpers/upgrade.jsx';
 
 export default class MyRooms extends React.Component {
   constructor(props) {
@@ -16,7 +16,13 @@ export default class MyRooms extends React.Component {
 
   componentDidUpdate() {
     if (this.props.loading) {
-      upgrade(this.refs.sppinner);
+      upgrade(this.refs.spinner);
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.props.loading) {
+      downgrade(this.refs.spinner);
     }
   }
 
@@ -36,6 +42,7 @@ export default class MyRooms extends React.Component {
         <div
           className="mdl-spinner
           mdl-spinner--single-color mdl-js-spinner is-active"
+          ref="spinner"
         >
         </div> : this.renderList()}
       </div>
