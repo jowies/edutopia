@@ -24,7 +24,7 @@ export default class Home extends React.Component {
           <div
             className="center
               demo-card-square
-              mdl-card mdl-shadow--2dp"
+              mdl-card fixed-size mdl-shadow--2dp"
             style={{ width: '320px' }}
           >
             <div className="mdl-card__title mdl-card--expand">
