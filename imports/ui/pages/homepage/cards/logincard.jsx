@@ -5,15 +5,15 @@ import { upgrade, downgrade } from '../../../helpers/upgrade.jsx';
 export default class LogInCard extends React.Component {
 
   componentDidMount() {
-    upgrade(this.refs.signup, this.refs.login);
+    upgrade(this.refs.signup, this.refs.login, this.refs.textfield1, this.refs.textfield2);
   }
 
   componentDidUpdate() {
-    upgrade(this.refs.signup, this.refs.login);
+    upgrade(this.refs.signup, this.refs.login, this.refs.textfield1, this.refs.textfield2);
   }
 
   componentWillUnmount() {
-    downgrade(this.refs.signup, this.refs.login);
+    downgrade(this.refs.signup, this.refs.login, this.refs.textfield1, this.refs.textfield2);
   }
 
   render() {
@@ -36,11 +36,11 @@ export default class LogInCard extends React.Component {
           </div>
           <div className="mdl-card__actions">
             <form action="#">
-              <div className="mdl-textfield mdl-js-textfield">
+              <div className="mdl-textfield mdl-js-textfield" ref="textfield1">
                 <input className="mdl-textfield__input" type="text" id="sample1" />
                 <label className="mdl-textfield__label" htmlFor="sample1">Email...</label>
               </div>
-              <div className="mdl-textfield mdl-js-textfield">
+              <div className="mdl-textfield mdl-js-textfield" ref="textfield2">
                 <input className="mdl-textfield__input" type="text" id="sample1" />
                 <label className="mdl-textfield__label" htmlFor="sample1">Password...</label>
               </div>

@@ -1,7 +1,5 @@
 import React from 'react';
-import { upgrade, downgrade } from '../../helpers/upgrade.jsx';
 import EnterLectureCard from '../homepage/cards/enterlecturecard.jsx';
-
 import EntryCard from '../homepage/cards/entrycard.jsx';
 import SignUpCard from '../homepage/cards/signupcard.jsx';
 import LogInCard from '../homepage/cards/logincard.jsx';
@@ -17,17 +15,6 @@ export default class Home extends React.Component {
     this.showEntryCard = this.showEntryCard.bind(this);
     this.showEnterLectureCard = this.showEnterLectureCard.bind(this);
   }
-  componentDidMount() {
-    // upgrade(this.refs.signup, this.refs.login, this.refs.card);
-  }
-
-  componentDidUpdate() {
-   // upgrade(this.refs.signup, this.refs.login, this.refs.card);
-  }
-
-  componentWillUnmount() {
-   // downgrade(this.refs.signup, this.refs.login, this.refs.card);
-  }
   getCardContent() {
     if (this.state.activeCard === 'entrycard') {
       return (
@@ -36,17 +23,14 @@ export default class Home extends React.Component {
           showLogInCard={this.showLogInCard}
           showEnterLectureCard={this.showEnterLectureCard}
         />);
-    }
-    if (this.state.activeCard === 'logincard') {
+    } else if (this.state.activeCard === 'logincard') {
       return <LogInCard goBack={this.showEntryCard} />;
-    }
-    if (this.state.activeCard === 'signupcard') {
+    } else if (this.state.activeCard === 'signupcard') {
       return <SignUpCard goBack={this.showEntryCard} />;
-    }
-    if (this.state.activeCard === 'enterlecturecard') {
+    } else if (this.state.activeCard === 'enterlecturecard') {
       return <EnterLectureCard goBack={this.showEntryCard} />;
     }
-    return <div>Page not found - go back</div>;
+    return <div>404 - Page not found - go back</div>;
   }
   showEnterLectureCard() {
     this.setState({

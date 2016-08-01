@@ -1,21 +1,46 @@
+import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { upgrade, downgrade } from '../../../helpers/upgrade.jsx';
-
+import { Rooms } from '../../../../api/rooms/rooms.js';
+import { Accounts } from 'meteor/accounts-base';
 
 export default class EnterLectureCard extends React.Component {
-
+  constructor(props) {
+    super(props);
+    this.state = { value: '' };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    /* const roomId = this.state.value;
+    const handle = Meteor.subscribe('demoRoomByCode', roomId);
+    if (handle.ready()) {
+      data.room = DemoRooms.findOne({roomCode: roomId});
+    } */
+  }
   componentDidMount() {
-    upgrade(this.refs.signup, this.refs.login);
+    upgrade(this.refs.signup, this.refs.login, this.refs.textfield);
   }
 
   componentDidUpdate() {
-    upgrade(this.refs.signup, this.refs.login);
+    upgrade(this.refs.signup, this.refs.login, this.refs.textfield);
   }
 
   componentWillUnmount() {
-    downgrade(this.refs.signup, this.refs.login);
+    downgrade(this.refs.signup, this.refs.login, this.refs.textfield);
   }
 
+  handleChange(event) {
+    this.setState({
+      value: event.target.value,
+    });
+  }
+  handleSubmit() {
+    console.log('Handle Submit');
+    console.log(this.state.value);
+    if (this.state.value.length === 4) {
+      console.log('log in function not working yet');
+      // Add to room if there is a room with pin === entered pin
+    }
+  }
   render() {
     return (
       <div>
@@ -31,15 +56,23 @@ export default class EnterLectureCard extends React.Component {
                 mdl-card__subtitle-text"
               style={{ paddingTop: '10px', marginTop: '10px' }}
             >
-              <h5>Go directly to a lecture</h5>
+              <h4>Go directly to a lecture</h4>
             </div>
           </div>
           <div className="mdl-card__actions">
-            <form action="#">
-              <div className="mdl-textfield mdl-js-textfield">
-                <input className="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="sample2" />
+            <form onSubmit={this.handleSubmit}>
+              <div className="mdl-textfield mdl-js-textfield" ref="textfield">
+                <input
+                  className="mdl-textfield__input"
+                  type="text"
+                  pattern="-?[0-9]*(\.[0-9]+)?"
+                  id="sample2"
+                  maxLength={4}
+                  value={this.state.value}
+                  onChange={this.handleChange}
+                />
                 <label className="mdl-textfield__label" htmlFor="sample2">PIN...</label>
-                <span className="mdl-textfield__error">Pin is not a number!</span>
+                <span className="mdl-textfield__error">entered pin is not a number!</span>
               </div>
             </form>
           </div>
@@ -60,6 +93,7 @@ export default class EnterLectureCard extends React.Component {
               Go back
             </button>
             <button
+              onClick={this.handleSubmit}
               className="mdl-button
                 mdl-button--primary
                 mdl-button--raised
