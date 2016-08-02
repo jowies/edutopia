@@ -1,11 +1,22 @@
 /* CSS declarations go here d*/
-html, body {
+
+
+html, body, div, main {
   font-family: 'Roboto', 'Helvetica', sans-serif;
+  height: '100%';
 }
 .layouthome {
   background: url('/bilde.jpg') center/cover;
 }
 
+.demo-card-square.mdl-card.fixed-size {
+  width: 100%;
+  height: 320px;
+}
+.form-card {
+  width: 100%;
+  height: 100%;
+}
 
 .demo-card-square > .mdl-card__title {
   color: #fff;

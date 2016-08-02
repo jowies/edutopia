@@ -1,24 +1,55 @@
 import React from 'react';
-import { upgrade, downgrade } from '../../helpers/upgrade.jsx';
-import { FlowRouter } from 'meteor/kadira:flow-router';
+import EnterLectureCard from '../homepage/cards/enterlecturecard.jsx';
+import EntryCard from '../homepage/cards/entrycard.jsx';
+import SignUpCard from '../homepage/cards/signupcard.jsx';
+import LogInCard from '../homepage/cards/logincard.jsx';
 
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
-
-    this.signUp = this.signUp.bind(this);
+    this.state = { activeCard: 'entrycard' };
+    this.getCardContent = this.getCardContent.bind(this);
+    this.showSignUpCard = this.showSignUpCard.bind(this);
+    this.showLogInCard = this.showLogInCard.bind(this);
+    this.showEntryCard = this.showEntryCard.bind(this);
+    this.showEnterLectureCard = this.showEnterLectureCard.bind(this);
   }
-
-  componentDidMount() {
-    upgrade(this.refs.signup, this.refs.login);
+  getCardContent() {
+    if (this.state.activeCard === 'entrycard') {
+      return (
+        <EntryCard
+          showSignUpCard={this.showSignUpCard}
+          showLogInCard={this.showLogInCard}
+          showEnterLectureCard={this.showEnterLectureCard}
+        />);
+    } else if (this.state.activeCard === 'logincard') {
+      return <LogInCard goBack={this.showEntryCard} />;
+    } else if (this.state.activeCard === 'signupcard') {
+      return <SignUpCard goBack={this.showEntryCard} />;
+    } else if (this.state.activeCard === 'enterlecturecard') {
+      return <EnterLectureCard goBack={this.showEntryCard} />;
+    }
+    return <div>404 - Page not found - go back</div>;
   }
-
-  componentDidUpdate() {
-    upgrade(this.refs.signup, this.refs.login);
+  showEnterLectureCard() {
+    this.setState({
+      activeCard: 'enterlecturecard',
+    });
   }
-
-  componentWillUnmount() {
-    downgrade(this.refs.signup, this.refs.login);
+  showEntryCard() {
+    this.setState({
+      activeCard: 'entrycard',
+    });
+  }
+  showLogInCard() {
+    this.setState({
+      activeCard: 'logincard',
+    });
+  }
+  showSignUpCard() {
+    this.setState({
+      activeCard: 'signupcard',
+    });
   }
 
   signUp() {
@@ -27,58 +58,11 @@ export default class Home extends React.Component {
 
   render() {
     return (
-      <div className="home center">
-        <div
-          className="
-            demo-card-square
-            mdl-card mdl-shadow--2dp center card"
-          style={{ maxWidth: '100%' }}
-        >
-          <div className="mdl-card__title mdl-card--expand">
-            <div
-              className="center
-                mdl-card__subtitle-text"
-              style={{ paddingTop: '10px', marginTop: '10px' }}
-            >
-              <h1>Edutopia</h1>
-            </div>
-          </div>
-          <div className="mdl-card__actions">
-            <div className="center">
-              <button
-                onClick={this.signUp}
-                ref="signup"
-                className="mdl-button
-                  mdl-button--raised
-                  mdl-button--colored
-                  mdl-color--light-green-500
-                  mdl-color-text--light-green-50
-                  mdl-js-button
-                  mdl-js-ripple-effect"
-
-              >
-                Sign Up
-              </button>
-            </div>
-          </div>
-          <div className="mdl-card__supporting-text">
-            or
-          </div>
-          <div className="mdl-card__actions">
-            <div className="center">
-              <button
-                onClick={this.logIn}
-                className="mdl-button
-                  mdl-button--primary
-                  mdl-button--raised
-                  mdl-js-button
-                  mdl-js-ripple-effect"
-                ref="login"
-              >
-                Log in
-              </button>
-            </div>
-          </div>
+      <div className="mdl-grid">
+        <div className="mdl-cell mdl-cell--4-col">
+        </div>
+        <div className="mdl-cell mdl-cell--4-col">
+          {this.getCardContent()}
         </div>
       </div>
     );

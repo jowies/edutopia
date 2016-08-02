@@ -14,7 +14,6 @@ export default class HomePage extends React.Component {
   componentWillUnmount() {
     downgrade(this.refs.layout);
   }
-
   render() {
     return (
       <div className="mdl-layout mdl-js-layout layouthome" ref="layout">
