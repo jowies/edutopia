@@ -8,6 +8,7 @@ import MyRoomsListContainer from '../../ui/containers/myroomslistcontainer.jsx';
 import JoinedRoomsListContainer from '../../ui/containers/joinedroomslistcontainer.jsx';
 import AboutUs from '../../ui/pages/homepage/aboutus.jsx';
 import Contact from '../../ui/pages/homepage/contact.jsx';
+import SignUp from '../../ui/pages/signup.jsx';
 
 FlowRouter.route('/', {
   action() {
@@ -42,5 +43,11 @@ FlowRouter.route('/aboutus', {
 FlowRouter.route('/contact', {
   action() {
     mount(HomePage, { content: <Contact /> });
+  },
+});
+
+FlowRouter.route('/signup', {
+  action() {
+    mount(SignUp);
   },
 });

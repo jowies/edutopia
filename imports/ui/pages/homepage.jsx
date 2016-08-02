@@ -17,7 +17,7 @@ export default class HomePage extends React.Component {
 
   render() {
     return (
-      <div className="mdl-layout mdl-js-layout layouttest" ref="layout">
+      <div className="mdl-layout mdl-js-layout layouthome" ref="layout">
         <header className="mdl-layout__header mdl-layout__header--scroll">
           <div className="mdl-layout-icon"></div>
           <div className="mdl-layout__header-row">
@@ -40,7 +40,7 @@ export default class HomePage extends React.Component {
             <a className="mdl-navigation__link" href="#">Get started</a>
           </nav>
         </div>
-        <main className="mdl-layout__content">
+        <main className="mdl-layout__content center">
           {this.props.content}
         </main>
       </div>

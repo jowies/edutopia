@@ -9828,7 +9828,7 @@ _:-ms-input-placeholder, :root .mdl-slider.mdl-slider.is-upgraded {
 
 .mdl-textfield__input {
   border: none;
-  border-bottom: 1px solid rgba(0,0,0, 0.12);
+  border-bottom: 1px solid rgba(0,0,0, 0.30);
   display: block;
   font-size: 16px;
   font-family: "Helvetica", "Arial", sans-serif;
@@ -9851,7 +9851,7 @@ _:-ms-input-placeholder, :root .mdl-slider.mdl-slider.is-upgraded {
   fieldset[disabled] .mdl-textfield .mdl-textfield__input,
   .mdl-textfield.is-disabled .mdl-textfield__input {
     background-color: transparent;
-    border-bottom: 1px dotted rgba(0,0,0, 0.12);
+    border-bottom: 1px dotted rgba(0,0,0, 0.30);
     color: rgba(0,0,0, 0.26); }
 
 .mdl-textfield textarea.mdl-textfield__input {
@@ -9859,7 +9859,7 @@ _:-ms-input-placeholder, :root .mdl-slider.mdl-slider.is-upgraded {
 
 .mdl-textfield__label {
   bottom: 0;
-  color: rgba(0,0,0, 0.26);
+  color: rgba(0,0,0, 0.40);
   font-size: 16px;
   left: 0;
   right: 0;

@@ -2846,7 +2846,7 @@ MaterialTextfield.prototype.onReset_ = function (event) {
    */
 MaterialTextfield.prototype.updateClasses_ = function () {
     this.checkDisabled();
-    this.checkValidity();
+    //this.checkValidity();
     this.checkDirty();
     this.checkFocus();
 };

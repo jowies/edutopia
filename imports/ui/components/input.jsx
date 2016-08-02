@@ -1,38 +1,55 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { upgrade, downgrade } from '../helpers/upgrade.jsx';
 
 export default class Input extends React.Component {
 
   componentDidMount() {
-    const element1 = this.refs.input;
-    const element2 = this.refs.inputcontainer;
-    componentHandler.upgradeElement(element1);
-    componentHandler.upgradeElement(element2, 'MaterialTextfield');
+    upgrade(this.refs.input);
   }
 
   componentDidUpdate() {
-    const element1 = this.refs.input;
-    const element2 = this.refs.inputcontainer;
-    componentHandler.upgradeElement(element1);
-    componentHandler.upgradeElement(element2, 'MaterialTextfield');
+    upgrade(this.refs.input);
+  }
+
+  componentWillUnmount() {
+    downgrade(this.refs.input);
+  }
+
+  getClassName() {
+    let classname = 'mdl-textfield mdl-js-textfield mdl-textfield--floating-label';
+    classname += this.props.error ? ' is-invalid' : '';
+    if (this.props.value.length > 0) {
+      classname += ' is-dirty';
+    }
+    if (document.activeElement === this.refs.textfield) {
+      classname += ' is-focused';
+    }
+
+    return classname;
   }
 
   render() {
     return (
       <div
-        className="mdl-textfield__expandable-holder mdl-js-input"
-        id="sample2"
-        ref="inputcontainer"
+        className={this.getClassName()}
+        ref="input"
       >
         <input
-          ref="input"
           value={this.props.value}
           onChange={this.props.onChange}
           className="mdl-textfield__input"
-          type="text"
-          id="fixed-header-drawer-exp"
+          type={this.props.type}
+          id={this.props.id}
+          ref="textfield"
         />
-        <label className="mdl-textfield__label" htmlFor="sample1">Text...</label>
+        <label
+          className="mdl-textfield__label"
+          htmlFor={this.props.id}
+        >
+          {this.props.label}
+
+        </label>
+        <span className="mdl-textfield__error">{this.props.errormessage}</span>
       </div>
     );
   }
@@ -41,4 +58,9 @@ export default class Input extends React.Component {
 Input.propTypes = {
   value: React.PropTypes.string,
   onChange: React.PropTypes.func,
+  id: React.PropTypes.string,
+  label: React.PropTypes.string,
+  type: React.PropTypes.string,
+  error: React.PropTypes.bool,
+  errormessage: React.PropTypes.arrayOf(React.PropTypes.string),
 };
