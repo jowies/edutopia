@@ -21,6 +21,7 @@ export default class SignUp extends React.Component {
       ready: false,
       usernameError: false,
       emailError: false,
+      emailNotValid: false,
       passwordError: false,
       passwordRepErrors: false,
     };
@@ -33,15 +34,15 @@ export default class SignUp extends React.Component {
   }
 
   componentDidMount() {
-    upgrade(this.refs.submit);
+    upgrade(this.refs.submit, this.refs.checkbox, this.refs.back);
   }
 
   componentDidUpdate() {
-    upgrade(this.refs.submit);
+    upgrade(this.refs.submit, this.refs.checkbox, this.refs.back);
   }
 
   componentWillUnmount() {
-    downgrade(this.refs.submit);
+    downgrade(this.refs.submit, this.refs.checkbox, this.refs.back);
   }
 
   getButtonClass() {
@@ -63,28 +64,46 @@ export default class SignUp extends React.Component {
         console.log(err);
       } else {
         this.setState({ alreadyUserUsername: res });
-        this.isReady(undefined, res, undefined);
         if (res || (username.length < 6 && username.length > 0)) {
           this.setState({ usernameError: true });
+          this.isReady(undefined, true, undefined);
         } else {
-          this.setState({ usernameError: false});
+          this.setState({ usernameError: false });
+          this.isReady(undefined, false, undefined);
         }
       }
     });
+    if (username.length < 1) {
+      this.isReady(undefined, true, undefined);
+      this.setState({ usernameError: false });
+    }
   }
 
   handleChangeEmail(e) {
     e.preventDefault();
     const email = e.target.value;
     this.setState({ email });
-    isUserEmail.call({ email }, (err, res) => {
-      if (err) {
-        console.log(err);
-      } else {
-        this.setState({ alreadyUserEmail: res });
-        this.isReady(err, undefined, undefined);
-      }
-    });
+    const re = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+    const isValid = re.test(email);
+    if (isValid) {
+      this.setState({ emailNotValid: false });
+      isUserEmail.call({ email }, (err, res) => {
+        if (err) {
+          console.log(err);
+        } else {
+          this.setState({ alreadyUserEmail: res });
+          this.setState({ emailError: res });
+          this.isReady(res, undefined, undefined);
+        }
+      });
+    } else {
+      this.setState({ emailError: true });
+      this.setState({ emailNotValid: true });
+      this.isReady(true, undefined, undefined);
+    }
+    if (email.length < 1) {
+      this.setState({ emailError: false });
+    }
   }
 
   handleChangePassword(e) {
@@ -106,8 +125,8 @@ export default class SignUp extends React.Component {
     this.isReady(undefined, undefined, passwordMatches);
   }
 
-  isReady(email = this.state.alreadyUserEmail,
-    username = this.state.alreadyUserUsername,
+  isReady(email = this.state.emailError,
+    username = this.state.usernameError,
     password = this.state.passwordMatches) {
     const ready = !(email ||
       username ||
@@ -137,11 +156,26 @@ export default class SignUp extends React.Component {
     return message;
   }
 
+  emailError() {
+    let message = '';
+    if (this.state.alreadyEmail) {
+      message += 'Email already signed up';
+    }
+    if (this.state.emailNotValid && (this.state.email.length > 0)) {
+      message += 'Please enter a valid email';
+    }
+    return message;
+  }
+
+  goBack() {
+    FlowRouter.go('/');
+  }
+
   render() {
     return (
       <div className="signup">
-        <div className="mdl-card mdl-shadow--4dp center" style={{ maxWidth: '100%' }} >
-          <div className="mdl-card__title mdl-color--light-green-900">
+        <div className="mdl-card mdl-shadow--4dp center" style={{ maxWidth: '100%', marginTop: '2em' }} >
+          <div className="mdl-card__title mdl-card--expand mdl-color--light-green-900">
             <h2
               className="mdl-card__title-text
                 mdl-color-text--light-green-50"
@@ -163,6 +197,8 @@ export default class SignUp extends React.Component {
               id={'email'}
               label={'Email'}
               type={'email'}
+              errormessage={this.emailError()}
+              error={this.state.emailError}
             />
             <Input
               value={this.state.password}
@@ -179,17 +215,44 @@ export default class SignUp extends React.Component {
               type={'password'}
             />
             <div className="mdl-card__actions">
-              <button
-                onClick={this.handleSubmit}
-                ref="submit"
-                type="submit"
-                className={this.getButtonClass()}
-                disabled={!this.state.ready}
-              >
-                Sign Up
-              </button>
+              <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-1" ref="checkbox">
+                <input type="checkbox" id="checkbox-1" className="mdl-checkbox__input" style={{ float: 'left' }} />
+                <span className="mdl-checkbox__label" style={{ float: 'left', paddingLeft: '3px' }}>
+                  <p>I agree to the &nbsp;
+                    <span>
+                      <a href="#">Terms and Conditions</a>
+                    </span>
+                  </p>
+                </span>
+              </label>
             </div>
           </form>
+          <div className="mdl-card__actions">
+            <button
+              onClick={this.goBack}
+              ref="back"
+              className="mdl-button
+                mdl-button--raised
+                mdl-button--colored
+                mdl-button--primary
+                mdl-js-button
+                mdl-js-ripple-effect"
+              style={{ float: 'left' }}
+            >
+              Go back
+            </button>
+            <button
+              onClick={this.handleSubmit}
+              ref="submit"
+              type="submit"
+              className={this.getButtonClass()}
+              disabled={!this.state.ready}
+              style={{ float: 'right' }}
+
+            >
+              Sign Up
+            </button>
+          </div>
         </div>
       </div>
     );

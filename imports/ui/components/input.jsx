@@ -62,5 +62,5 @@ Input.propTypes = {
   label: React.PropTypes.string,
   type: React.PropTypes.string,
   error: React.PropTypes.bool,
-  errormessage: React.PropTypes.arrayOf(React.PropTypes.string),
+  errormessage: React.PropTypes.string,
 };
