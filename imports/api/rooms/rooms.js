@@ -44,7 +44,8 @@ Rooms.publicFields = {
 
 Rooms.helpers({
   sessions() {
-    return Sessions.find({ roomId: this._id }, { sort: { createdAt: -1 } });
+    console.log(this._id);
+    return Sessions.find({ roomId: this._id });
   },
   editableBy(userId) {
     if (!this.userId) {

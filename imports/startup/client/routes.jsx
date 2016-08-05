@@ -5,6 +5,7 @@ import HomePage from '../../ui/pages/homepage.jsx';
 import Home from '../../ui/pages/homepage/home.jsx';
 import Dashboard from '../../ui/layouts/dashboard.jsx';
 import MyRoomsListContainer from '../../ui/containers/myroomslistcontainer.jsx';
+import MyRoomContainer from '../../ui/containers/myroomcontainer.jsx';
 import JoinedRoomsListContainer from '../../ui/containers/joinedroomslistcontainer.jsx';
 import AboutUs from '../../ui/pages/homepage/aboutus.jsx';
 import Contact from '../../ui/pages/homepage/contact.jsx';
@@ -25,6 +26,12 @@ FlowRouter.route('/dashboard', {
 FlowRouter.route('/dashboard/myrooms', {
   action() {
     mount(Dashboard, { content: <MyRoomsListContainer />, path: 'My Rooms' });
+  },
+});
+
+FlowRouter.route('/dashboard/myrooms/:roomId', {
+  action(params) {
+    mount(Dashboard, { content: <MyRoomContainer roomId={params.roomId} /> });
   },
 });
 

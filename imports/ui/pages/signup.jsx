@@ -24,6 +24,7 @@ export default class SignUp extends React.Component {
       emailNotValid: false,
       passwordError: false,
       passwordRepErrors: false,
+      checked: false,
     };
 
     this.handleChangeUsername = this.handleChangeUsername.bind(this);
@@ -31,6 +32,7 @@ export default class SignUp extends React.Component {
     this.handleChangePassword = this.handleChangePassword.bind(this);
     this.handleChangePasswordRep = this.handleChangePasswordRep.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChangeCheckbox = this.handleChangeCheckbox.bind(this);
   }
 
   componentDidMount() {
@@ -108,7 +110,13 @@ export default class SignUp extends React.Component {
 
   handleChangePassword(e) {
     e.preventDefault();
-    this.setState({ password: e.target.value, passwordRep: '' });
+    const password = e.target.value;
+    if (password.length > 0 && password.length < 6) {
+      this.setState({ passwordError: true });
+    } else {
+      this.setState({ passwordError: false });
+    }
+    this.setState({ password, passwordRep: '' });
     this.isReady(undefined, undefined, false);
   }
 
@@ -125,12 +133,21 @@ export default class SignUp extends React.Component {
     this.isReady(undefined, undefined, passwordMatches);
   }
 
+  handleChangeCheckbox(e) {
+    console.log(e.target.checked);
+    this.setState({ checked: e.target.checked });
+    this.isReady(undefined,undefined,undefined, e.target.checked);
+  }
+
   isReady(email = this.state.emailError,
     username = this.state.usernameError,
-    password = this.state.passwordMatches) {
-    const ready = !(email ||
+    password = this.state.passwordMatches, checked = this.state.checked) {
+    let ready = !(email ||
       username ||
-      !password);
+      !password || !checked);
+    if (this.state.email.length < 1 || this.state.username.length < 1) {
+      ready = false;
+    }
     this.setState({ ready });
     console.log(ready);
   }
@@ -141,8 +158,13 @@ export default class SignUp extends React.Component {
       username: this.state.username,
       email: this.state.email,
       password: this.state.password,
-    }, function(err, callback) {});
-    FlowRouter.go('/dashboard');
+    }, (err, callback) => {
+      if (err) {
+        console.log(err);
+      } else {
+        FlowRouter.go('/dashboard');
+      }
+    });
   }
 
   usernameError() {
@@ -163,6 +185,17 @@ export default class SignUp extends React.Component {
     }
     if (this.state.emailNotValid && (this.state.email.length > 0)) {
       message += 'Please enter a valid email';
+    }
+    return message;
+  }
+
+  passwordError() {
+    let message = '';
+    if (this.state.password.length < 6) {
+      message += 'Password has to be at least 6 characters long';
+    }
+    if (this.state.password.length > 23) {
+      message += 'Password cannot exceed 24 characters';
     }
     return message;
   }
@@ -206,6 +239,8 @@ export default class SignUp extends React.Component {
               id={'password'}
               label={'Password'}
               type={'password'}
+              error={this.state.passwordError}
+              errormessage={this.passwordError()}
             />
             <Input
               value={this.state.passwordRep}
@@ -213,10 +248,21 @@ export default class SignUp extends React.Component {
               id={'passwordrep'}
               label={'Repeat password'}
               type={'password'}
+
             />
             <div className="mdl-card__actions">
-              <label className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" htmlFor="checkbox-1" ref="checkbox">
-                <input type="checkbox" id="checkbox-1" className="mdl-checkbox__input" style={{ float: 'left' }} />
+              <label
+                className="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"
+                htmlFor="checkbox-1" ref="checkbox"
+              >
+                <input
+                  type="checkbox"
+                  id="checkbox-1"
+                  className="mdl-checkbox__input"
+                  style={{ float: 'left' }}
+                  onChange={this.handleChangeCheckbox}
+                  checked={this.state.checked}
+                />
                 <span className="mdl-checkbox__label" style={{ float: 'left', paddingLeft: '3px' }}>
                   <p>I agree to the &nbsp;
                     <span>
