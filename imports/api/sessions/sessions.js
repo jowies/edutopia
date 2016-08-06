@@ -27,6 +27,7 @@ Sessions.schema = new SimpleSchema({
   createdBy: { type: String, regEx: SimpleSchema.RegEx.Id },
   roomId: { type: String, regEx: SimpleSchema.RegEx.Id },
   active: { type: Boolean },
+  sessionName: { type: String },
 });
 
 Sessions.attachSchema(Sessions.schema);

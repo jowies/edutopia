@@ -52,7 +52,7 @@ export default class Dashboard extends React.Component {
             <div className="mdl-layout-spacer"></div>
           </nav>
         </div>
-        <main className="mdl-layout__content">
+        <main className="mdl-layout__content mdl-color--grey-100">
           <div className="page-content">{this.props.content}</div>
         </main>
       </div>

@@ -19,7 +19,7 @@ FlowRouter.route('/', {
 
 FlowRouter.route('/dashboard', {
   action() {
-    mount(Dashboard);
+    mount(Dashboard, { path: 'Home' });
   },
 });
 
@@ -31,7 +31,13 @@ FlowRouter.route('/dashboard/myrooms', {
 
 FlowRouter.route('/dashboard/myrooms/:roomId', {
   action(params) {
-    mount(Dashboard, { content: <MyRoomContainer roomId={params.roomId} /> });
+    mount(Dashboard, { content: <MyRoomContainer roomId={params.roomId} />, path: 'My sessions' });
+  },
+});
+
+FlowRouter.route('/dashboard/myrooms/:roomId/:sessionId', {
+  action(params) {
+    mount(Dashboard, { content: <div roomId={params.roomId} sessionId={params.sessionId}>ROUTE</div>, path: 'session' });
   },
 });
 

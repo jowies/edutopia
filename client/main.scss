@@ -90,5 +90,13 @@ a.dashboard-title:hover
   display: block;
 }
 
+.listElement {
+  margin-bottom: 10px;
+  background-color: #FFFFFF;
+}
+.listElement:hover {
+  border-bottom:5px solid #F0FFFF !important;
+  background-color: #F0FFFF;
+}
 
 

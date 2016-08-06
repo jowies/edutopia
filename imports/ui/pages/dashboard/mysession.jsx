@@ -30,46 +30,55 @@ export default class MyRoom extends React.Component {
     }
   }
 
-  routeToSessions(event) {
-    FlowRouter.go('/dashboard/myrooms/', this.props.roomId, '/', event.currentTarget.id);
-  }
-
   renderList() {
-    return this.props.sessions.map((session) => (
+    return (
       <div>
         <li
-          id={session._id}
-          onClick={this.routeToSessions}
           className="mdl-list__item mdl-list__item--three-line listElement"
         >
           <span className="mdl-list__item-primary-content">
-            <i className="material-icons mdl-list__item-avatar">school</i>
+            <i className="material-icons mdl-list__item-avatar">question</i>
             <span>
-              <p key={session._id}>{session.sessionName}
-                <span style={{ float: 'right' }} > &nbsp; created at: &nbsp;
-                  <span>{session.createdAt.toString()}</span>
-                </span>
-              </p>
-            </span>
-            <span className="mdl-list__item-text-body">
-              Short summary of what the session is about.
-              E.g. what chapter, or a short summary of the lecture.
+              <p> Oppdiktet navn </p>
             </span>
           </span>
           <span className="mdl-list__item-secondary-content">
-            <a className="mdl-list__item-secondary-action" href="#">
-              <i className="material-icons">star</i>
-            </a>
+            <h5>Here is the question coming</h5>
+          </span>
+        </li>
+        <li
+          className="mdl-list__item mdl-list__item--three-line listElement"
+        >
+          <span className="mdl-list__item-primary-content">
+            <i className="material-icons mdl-list__item-avatar">question</i>
+            <span>
+              <p> Oppdiktet navn </p>
+            </span>
+          </span>
+          <span className="mdl-list__item-secondary-content">
+            <h5>Here is the question coming</h5>
+          </span>
+        </li>
+        <li
+          className="mdl-list__item mdl-list__item--three-line listElement"
+        >
+          <span className="mdl-list__item-primary-content">
+            <i className="material-icons mdl-list__item-avatar">question</i>
+            <span>
+              <p> Oppdiktet navn </p>
+            </span>
+          </span>
+          <span className="mdl-list__item-secondary-content">
+            <h5>Here is the question coming</h5>
           </span>
         </li>
       </div>
-    ));
+    );
   }
 
   render() {
     return (
       <div>
-        {this.props.room ? this.props.room.nickname : <p>Loading</p>}
         {this.props.loading ? <p>Loading sessions</p> : <ul className="mdl-list list"> {this.renderList()} </ul>}
       </div>
     );
