@@ -27,6 +27,8 @@ Sessions.schema = new SimpleSchema({
   createdBy: { type: String, regEx: SimpleSchema.RegEx.Id },
   roomId: { type: String, regEx: SimpleSchema.RegEx.Id },
   active: { type: Boolean },
+  closedAt: { type: Date, optional: true },
+  code: { type: String, optional: true },
 });
 
 Sessions.attachSchema(Sessions.schema);
@@ -36,6 +38,7 @@ Sessions.publicFields = {
   createdBy: 1,
   roomId: 1,
   active: 0,
+  closedAt: 1,
 };
 
 Sessions.helpers({
