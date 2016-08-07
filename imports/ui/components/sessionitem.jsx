@@ -9,7 +9,7 @@ export default class SessionItem extends React.Component {
 
   handleClick(e) {
     e.preventDefault();
-    const route = '/session/';
+    const route = '/mysession/';
     FlowRouter.go(route + this.props.session._id);
   }
 

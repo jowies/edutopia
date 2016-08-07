@@ -1,8 +1,7 @@
 import React from 'react';
 import { upgrade, downgrade } from '../../helpers/upgrade.jsx';
 import CommentItem from '../../components/commentitem.jsx';
-import PostItem from '../../components/postitem.jsx';
-import Button from '../../components/button.jsx';
+
 
 export default class MyPost extends React.Component {
   constructor(props) {
@@ -65,8 +64,7 @@ export default class MyPost extends React.Component {
               </button>
             </div>
           </div>
-          : <p> Loading </p>}
-       
+          : <p> Loading </p>}   
       </div>
     );
   }
