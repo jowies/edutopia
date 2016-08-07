@@ -42,10 +42,10 @@ export default class MyPost extends React.Component {
   render() {
     return (
       <div>
+        {this.props.post ? this.props.post.text : <p> Loading </p>}
         {this.props.loading ? <p>Loading Comments</p> :
           <div>
             <div>
-              <PostItem post={this.props.post} />
             </div>
             <form className="flexDisplay flexDirectionRow" style={{ paddingTop: '10px' }} action="#">
               <div style={{ paddingRight: '10px', paddingLeft: '10px' }} ref="textfield1" className="mdl-textfield mdl-js-textfield flexDisplay flex9">

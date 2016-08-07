@@ -2,7 +2,7 @@ import React from 'react';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import Button from '../components/button.jsx';
 
-export default class SessionItem extends React.Component {
+export default class PostItem extends React.Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
@@ -61,6 +61,6 @@ export default class SessionItem extends React.Component {
   }
 }
 
-SessionItem.propTypes = {
+PostItem.propTypes = {
   post: React.PropTypes.object,
 };

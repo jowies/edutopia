@@ -11,7 +11,7 @@ const MyPostContainer = createContainer(({ postId }) => {
   const commentsHandle = Meteor.subscribe('comments.byPost', postId);
   const loading = !postHandle.ready && !commentsHandle.ready;
   if (!loading) {
-    post = Posts.find(postId);
+    post = Posts.findOne({ _id: postId });
     comments = Comments.find({ postId }).fetch();
   }
   return {
