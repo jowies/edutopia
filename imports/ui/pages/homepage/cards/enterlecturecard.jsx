@@ -4,6 +4,8 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { upgrade, downgrade } from '../../../helpers/upgrade.jsx';
 import { Rooms } from '../../../../api/rooms/rooms.js';
 import { Accounts } from 'meteor/accounts-base';
+import { joinSession } from '../../../../api/sessions/methods.js';
+import { Session } from 'meteor/session';
 
 export default class EnterLectureCard extends React.Component {
   constructor(props) {
@@ -30,16 +32,22 @@ export default class EnterLectureCard extends React.Component {
   }
 
   handleChange(event) {
+    event.preventDefault();
     this.setState({
       value: event.target.value,
     });
   }
-  handleSubmit() {
-    console.log('Handle Submit');
-    console.log(this.state.value);
+  handleSubmit(e) {
+    e.preventDefault();
     if (this.state.value.length === 4) {
-      // kode for å få id gitt av pin
-
+      joinSession.call(this.state.value, Session.get('clientId'), (err, res) => {
+        if (err) {
+          console.log(err);
+        } else {
+          const path = '/joinedsession/';
+          FlowRouter.go(path + res);
+        }
+      });
     }
   }
   render() {

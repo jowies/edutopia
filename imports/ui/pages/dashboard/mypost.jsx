@@ -64,7 +64,7 @@ export default class MyPost extends React.Component {
               </button>
             </div>
           </div>
-          : <p> Loading </p>}   
+          : <p> Loading </p>}
       </div>
     );
   }

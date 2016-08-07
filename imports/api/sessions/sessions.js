@@ -1,14 +1,14 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Posts } from '../posts/posts.js';
-import { Random } from 'meteor/random';
-
 
 class SessionsCollection extends Mongo.Collection {
   insert(session, callback) {
     const userSession = session;
     userSession.createdAt = userSession.createdAt || new Date();
-    const generateCode = Math.floor(Random.fraction * 9000 + 1000);
+    console.log('running');
+    const generateCode = Math.floor((Math.random() * 9000 + 1000)).toString();
+    console.log(generateCode);
     userSession.code = generateCode;
     return super.insert(userSession, callback);
   }

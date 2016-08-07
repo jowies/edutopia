@@ -6,6 +6,7 @@ import { _ } from 'meteor/underscore';
 
 import { Sessions } from './sessions.js';
 import { Posts } from '../posts/posts.js';
+import { Rooms } from '../rooms/rooms.js';
 
 const ROOM_ID_ONLY = new SimpleSchema({
   listId: { type: String },
@@ -38,13 +39,66 @@ export const remove = new ValidatedMethod({
 
     Posts.remove({ sessionId });
 
+
     Sessions.remove(sessionId);
+  },
+});
+
+/*export const joinSession = new ValidatedMethod({
+  name: 'sessions.joinByCode',
+  validate: null,
+  run(data) {
+    const code = data.code;
+    const userId = data.userId;
+    console.log(code);
+    const session = Sessions.findOne({ code: '4553' })
+    console.log(session);
+    const room = Rooms.findOne({ _id: session.roomId });
+    if (session && room) {
+      if (!_.include(room.joinedBy, userId)) {
+        Rooms.update(session.roomId, {
+          $addToSet: { joinedBy: userId },
+          $inc: { joined: 1 },
+        });
+      }
+      return session._id;
+    }
+    return false;
+  },
+});
+*/
+
+export const joinSession = new ValidatedMethod({
+  name: 'sessions.joinByCode',
+  validate: new SimpleSchema({
+    code: { type: String },
+    userId: { type: String },
+  }).validator(),
+  run({ code, userId }) {
+    const session = Sessions.findOne({ code });
+    let room;
+    console.log(session);
+    if (session) {
+      room = Rooms.findOne({ _id: session.roomId });
+    }
+    if (!!session && !!room) {
+      if (!_.include(room.joinedBy, userId)) {
+        Rooms.update(session.roomId, {
+          $addToSet: { joinedBy: userId },
+          $inc: { joined: 1 },
+        });
+      }
+      console.log(session._id);
+      return session._id;
+    }
+    return false;
   },
 });
 
 const ROOMS_METHODS = _.pluck([
   insert,
   remove,
+  joinSession,
 ], 'name');
 
 if (Meteor.isServer) {

@@ -52,7 +52,7 @@ export const upvote = new ValidatedMethod({
   name: 'posts.upvote',
   validate: new SimpleSchema({
     postId: { type: String },
-    poster: { type: String },
+    votedBy: { type: String },
   }).validator(),
   run({ postId, votedBy }) {
     const post = Posts.findOne(postId);
