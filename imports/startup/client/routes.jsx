@@ -8,9 +8,12 @@ import MyRoomsListContainer from '../../ui/containers/myroomslistcontainer.jsx';
 import MyRoomContainer from '../../ui/containers/myroomcontainer.jsx';
 import JoinedRoomsListContainer from '../../ui/containers/joinedroomslistcontainer.jsx';
 import MySessionContainer from '../../ui/containers/mysessioncontainer.jsx';
+import MyPostContainer from '../../ui/containers/mypostcontainer.jsx';
 import AboutUs from '../../ui/pages/homepage/aboutus.jsx';
 import Contact from '../../ui/pages/homepage/contact.jsx';
 import SignUp from '../../ui/pages/signup.jsx';
+import Settings from '../../ui/pages/dashboard/settings.jsx';
+
 
 FlowRouter.route('/', {
   action() {
@@ -29,6 +32,11 @@ FlowRouter.route('/dashboard/myrooms', {
     mount(Dashboard, { content: <MyRoomsListContainer />, path: 'My Rooms' });
   },
 });
+FlowRouter.route('/dashboard/settings', {
+  action() {
+    mount(Dashboard, { content: <Settings />, path: 'Settings' });
+  },
+});
 
 FlowRouter.route('/dashboard/myrooms/:roomId', {
   action(params) {
@@ -39,6 +47,11 @@ FlowRouter.route('/dashboard/myrooms/:roomId', {
 FlowRouter.route('/session/:sessionId', {
   action(params) {
     mount(Dashboard, { content: <MySessionContainer sessionId={params.sessionId} />, path: 'session' });
+  },
+});
+FlowRouter.route('/comments/:postId', {
+  action(params) {
+    mount(Dashboard, { content: <MyPostContainer postId={params.postId} />, path: 'Question > comments' });
   },
 });
 

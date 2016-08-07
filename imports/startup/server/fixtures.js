@@ -2,12 +2,14 @@ import { Meteor } from 'meteor/meteor';
 import { Rooms } from '../../api/rooms/rooms.js';
 import { Sessions } from '../../api/sessions/sessions.js';
 import { Posts } from '../../api/posts/posts.js';
+import { Comments } from '../../api/comments/comments.js';
 import { Accounts } from 'meteor/accounts-base';
 
 Meteor.startup(() => {
   const user = {};
   const room = {};
   const session = {};
+  const post = {};
   const date = new Date();
   if (Meteor.users.find().count() === 0) {
     user.id = Accounts.createUser({ username: 'Jon', password: 'tester' });
@@ -65,13 +67,20 @@ Meteor.startup(() => {
       active: true,
       sessionName: 'Lecture 3',
     });
-    Posts.insert({
+    post.id = Posts.insert({
       createdBy: 'hWNDLGg3wSbXFQJc5',
       sessionId: session.id,
       archived: false,
       votes: 3,
       votedBy: ['hWNDLGg3wSbXFQJc5', 'hWNDLGg3wSbXFQJc5', 'hWNDLGg3wSbXFQJc5'],
       text: 'Hvor mange kroner  får jeg hvis jeg spør jævlki snilt',
+    });
+    Comments.insert({
+      postId: post.id,
+      createdAt: new Date(),
+      createdBy: 'hWNDLGg3wSbXFQJc5',
+      text: 'da får du null fuckings kroner',
+      archived: false,
     });
   }
 });

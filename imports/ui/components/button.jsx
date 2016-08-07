@@ -28,7 +28,7 @@ export default class Button extends React.Component {
           mdl-js-ripple-effect"
         ref="button"
       >
-        Log in
+        {this.props.label}
       </button>
     );
   }
@@ -39,6 +39,7 @@ Button.propTypes = {
   onClick: React.PropTypes.func,
   className: React.PropTypes.string,
   ripple: React.PropTypes.bool,
+  label: React.PropTypes.string,
 };
 
 Button.defaultProps = {

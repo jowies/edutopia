@@ -1,7 +1,7 @@
 import React from 'react';
 import { upgrade, downgrade } from '../../helpers/upgrade.jsx';
 import RoomItem from '../../components/roomitem.jsx';
-
+import { Meteor } from 'meteor/meteor';
 
 export default class MyRooms extends React.Component {
   constructor(props) {
@@ -30,6 +30,10 @@ export default class MyRooms extends React.Component {
       downgrade(this.refs.spinner);
     }
   }
+  createRoom() {
+    const user = Meteor.userId();
+    // rooms.insert(user);
+  }
 
 
   renderList() {
@@ -48,6 +52,11 @@ export default class MyRooms extends React.Component {
           ref="spinner"
         >
         </div> : <ul className="mdl-list list"> {this.renderList()} </ul>}
+        <div className="center">
+          <button onClick={this.createRoom} className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">
+            <i className="material-icons">add</i>
+          </button>
+        </div>
       </div>
     );
   }

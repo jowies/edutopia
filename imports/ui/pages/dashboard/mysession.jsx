@@ -1,6 +1,7 @@
 import React from 'react';
 import { upgrade, downgrade } from '../../helpers/upgrade.jsx';
 import PostItem from '../../components/postitem.jsx';
+import Button from '../../components/button.jsx';
 
 export default class MySession extends React.Component {
   constructor(props) {
@@ -10,13 +11,13 @@ export default class MySession extends React.Component {
 
   componentDidMount() {
     if (this.props.loading) {
-      upgrade(this.refs.spinner);
+      upgrade(this.refs.spinner, this.refs.textfield1);
     }
   }
 
   componentDidUpdate() {
     if (this.props.loading) {
-      upgrade(this.refs.spinner);
+      upgrade(this.refs.spinner, this.refs.textfield1);
     }
   }
 
@@ -26,20 +27,27 @@ export default class MySession extends React.Component {
     // e.g. if it upgrades because of load, then it should downgrade later
     // on, but this wont happen because it isn't loading anymore.
     if (this.props.loading) {
-      downgrade(this.refs.spinner);
+      downgrade(this.refs.spinner, this.refs.textfield1);
     }
   }
 
   renderList() {
     return this.props.posts.map((post) => (
-      <PostItem room={post} key={post._id} />
+      <PostItem post={post} key={post._id} />
     ));
   }
 
   render() {
     return (
       <div>
-        {!this.props.session ? <p> Loading</p> : this.props.session.sessionName}
+        <form className="flexDisplay flexDirectionRow" style={{ paddingTop: '10px' }} action="#">
+          <div style={{ paddingRight: '10px', paddingLeft: '10px' }} ref="textfield1" className="mdl-textfield mdl-js-textfield flexDisplay flex9">
+            <input className="mdl-textfield__input" type="text" id="sample3" placeholder="Enter your question..." />
+          </div>
+          <div className="flexDisplay flex1">
+            <Button label="Post" />
+          </div>
+        </form>
         {this.props.loading ? <p>Loading sessions</p> : <ul className="mdl-list list"> {this.renderList()} </ul>}
       </div>
     );

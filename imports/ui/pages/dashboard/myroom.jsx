@@ -30,6 +30,8 @@ export default class MyRoom extends React.Component {
       downgrade(this.refs.spinner);
     }
   }
+  createSession() {
+  }
 
   renderList() {
     return this.props.sessions.map((session) => (
@@ -42,6 +44,11 @@ export default class MyRoom extends React.Component {
       <div>
         {this.props.room ? this.props.room.nickname : <p>Loading</p>}
         {this.props.loading ? <p>Loading sessions</p> : <ul className="mdl-list list"> {this.renderList()} </ul>}
+        <div className="center">
+          <button onClick={this.createSession} className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">
+            <i className="material-icons">add</i>
+          </button>
+        </div>
       </div>
     );
   }

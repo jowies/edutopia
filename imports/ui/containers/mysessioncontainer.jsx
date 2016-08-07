@@ -13,7 +13,7 @@ const MySessionContainer = createContainer(({ sessionId }) => {
   if (!loading) {
     session = Sessions.findOne({ _id: sessionId });
     posts = Posts.find({ sessionId }).fetch();
-    console.log(posts);
+    // console.log(posts);
   }
   return {
     loading,

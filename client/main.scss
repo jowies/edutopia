@@ -1,6 +1,5 @@
 /* CSS declarations go here d*/
 
-
 html, body, div, main {
   font-family: 'Roboto', 'Helvetica', sans-serif;
   height: '100%';
@@ -24,6 +23,9 @@ html, body, div, main {
 .center {
   margin: 0 auto;
   text-align: center;
+}
+.extrawide{
+    width:500px;
 }
 
 a.dashboard-title {

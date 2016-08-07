@@ -1,4 +1,5 @@
 import React from 'react';
+import { Meteor } from 'meteor/meteor';
 import { upgrade, downgrade } from '../helpers/upgrade.jsx';
 import { nickname } from '../../api/rooms/methods.js';
 import { FlowRouter } from 'meteor/kadira:flow-router';
@@ -7,8 +8,10 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 export default class Dashboard extends React.Component {
   constructor(props) {
     super(props);
+    const userId = Meteor.userId();
     this.state = {
       nickname: '',
+      username: userId,
     };
   }
 
@@ -54,19 +57,25 @@ export default class Dashboard extends React.Component {
             <span className="mdl-layout-title">
               {this.getPath()}
             </span>
+            <div className="mdl-layout-spacer"></div>
+            <div style={{ float: 'right' }}>
+              <a href="/dashboard/myrooms">
+                {this.state.username}
+              </a>
+            </div>
           </div>
         </header>
         <div className="mdl-layout__drawer mdl-color--light-green-900 drawer">
           <nav className="mdl-navigation navigation" >
-            <a className="mdl-navigation__link" href="">
+            <a className="mdl-navigation__link" href="/dashboard/myrooms">
               <i className="material-icons" role="presentation">person</i>
               My Rooms
             </a>
-            <a className="mdl-navigation__link" href="" >
+            <a className="mdl-navigation__link" href="/dashboard/joinedrooms" >
               <i className="material-icons" role="presentation">group</i>
               Joined Rooms
             </a>
-            <a className="mdl-navigation__link" href="">
+            <a className="mdl-navigation__link" href="/dashboard/settings">
               <i className="material-icons" role="presentation">settings</i>
                 Profile
             </a>

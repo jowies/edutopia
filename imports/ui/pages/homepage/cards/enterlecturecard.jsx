@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
+import { FlowRouter } from 'meteor/kadira:flow-router';
 import { upgrade, downgrade } from '../../../helpers/upgrade.jsx';
 import { Rooms } from '../../../../api/rooms/rooms.js';
 import { Accounts } from 'meteor/accounts-base';
@@ -37,8 +38,8 @@ export default class EnterLectureCard extends React.Component {
     console.log('Handle Submit');
     console.log(this.state.value);
     if (this.state.value.length === 4) {
-      console.log('log in function not working yet');
-      // Add to room if there is a room with pin === entered pin
+      // kode for å få id gitt av pin
+
     }
   }
   render() {

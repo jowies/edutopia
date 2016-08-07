@@ -15,8 +15,9 @@ export const insert = new ValidatedMethod({
   validate: new SimpleSchema({
     nickname: { type: String },
   }).validator(),
-  run({ text, sessionId }) {
+  run({ text, sessionId, postId }) {
     const comment = {
+      postId,
       createdAt: new Date(),
       createdBy: sessionId,      // votes: 0,
       // votedBy: [],
