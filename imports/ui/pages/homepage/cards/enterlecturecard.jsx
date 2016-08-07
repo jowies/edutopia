@@ -40,7 +40,10 @@ export default class EnterLectureCard extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     if (this.state.value.length === 4) {
-      joinSession.call(this.state.value, Session.get('clientId'), (err, res) => {
+      const code = this.state.value;
+      const userId = Session.get('clientId');
+      console.log(userId);
+      joinSession.call({ code, userId }, (err, res) => {
         if (err) {
           console.log(err);
         } else {
