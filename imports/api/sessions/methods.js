@@ -44,29 +44,20 @@ export const remove = new ValidatedMethod({
   },
 });
 
-/*export const joinSession = new ValidatedMethod({
-  name: 'sessions.joinByCode',
-  validate: null,
-  run(data) {
-    const code = data.code;
-    const userId = data.userId;
-    console.log(code);
-    const session = Sessions.findOne({ code: '4553' })
-    console.log(session);
-    const room = Rooms.findOne({ _id: session.roomId });
-    if (session && room) {
-      if (!_.include(room.joinedBy, userId)) {
-        Rooms.update(session.roomId, {
-          $addToSet: { joinedBy: userId },
-          $inc: { joined: 1 },
-        });
-      }
-      return session._id;
+
+export const code = new ValidatedMethod({
+  name: 'sessions.code',
+  validate: new SimpleSchema({
+    sessionId: { type: String },
+  }).validator(),
+  run({ sessionId }) {
+    const session = Sessions.findOne(sessionId);
+    if (session) {
+      return session.code;
     }
-    return false;
+    return !!session;
   },
 });
-*/
 
 export const joinSession = new ValidatedMethod({
   name: 'sessions.joinByCode',
@@ -99,6 +90,7 @@ const ROOMS_METHODS = _.pluck([
   insert,
   remove,
   joinSession,
+  code,
 ], 'name');
 
 if (Meteor.isServer) {
