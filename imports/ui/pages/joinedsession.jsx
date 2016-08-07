@@ -88,6 +88,9 @@ export default class MySession extends React.Component {
               Edutopia
             </span>
             <div className="mdl-layout-spacer"></div>
+              <a style={{ float: 'right' }} href="/" className="mdl-navigation__link mdl-color-text--white">
+                log out
+              </a>
           </div>
         </header>
         <div className="mdl-color--grey-100 mdl-color-text--grey-600">
