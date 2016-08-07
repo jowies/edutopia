@@ -1,9 +1,9 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { FlowRouter } from 'meteor/kadira:flow-router';
-import Button from '../components/button.jsx';
 import { upvote } from '../../../imports/api/posts/methods.js';
 import { Comments } from '../../api/comments/comments.js';
+import { upgrade, downgrade } from '../helpers/upgrade.jsx';
 
 export default class PostItem extends React.Component {
   constructor(props) {
@@ -20,6 +20,17 @@ export default class PostItem extends React.Component {
       const commentString = 'comments (' + numberOfComments + ')';
       this.state = { voted: true, opacity: 0.5, comments: commentString };
     }
+  }
+  componentDidMount() {
+    upgrade(this.refs.button);
+  }
+
+  componentDidUpdate() {
+    upgrade(this.refs.button);
+  }
+
+  componentWillUnmount() {
+    downgrade(this.refs.button);
   }
 
   goToComments(e) {
@@ -68,7 +79,9 @@ export default class PostItem extends React.Component {
 
         
         <span className="center">
-          <Button label={this.state.comments} onClick={this.goToComments} />
+          <button onClick={this.goToComments} ref="button" className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary mdl-color--light-blue-900">
+            {this.state.comments}
+          </button>
         </span>
         
       </li>

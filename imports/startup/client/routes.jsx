@@ -8,6 +8,7 @@ import MyRoomsListContainer from '../../ui/containers/myroomslistcontainer.jsx';
 import MyRoomContainer from '../../ui/containers/myroomcontainer.jsx';
 import JoinedRoomsListContainer from '../../ui/containers/joinedroomslistcontainer.jsx';
 import MySessionContainer from '../../ui/containers/mysessioncontainer.jsx';
+import CommentsContainer from '../../ui/containers/commentscontainer.jsx';
 import JoinedSessionContainer from '../../ui/containers/joinedsessioncontainer.jsx';
 import MyPostContainer from '../../ui/containers/mypostcontainer.jsx';
 import AboutUs from '../../ui/pages/homepage/aboutus.jsx';
@@ -57,11 +58,17 @@ FlowRouter.route('/joinedsession/:sessionId', {
   },
 });
 
-FlowRouter.route('/comments/:postId', {
+FlowRouter.route('/dashboard/comments/:postId', {
   action(params) {
     mount(Dashboard, { content: <MyPostContainer postId={params.postId} />, path: 'Question > comments' });
   },
 });
+FlowRouter.route('/comments/:postId', {
+  action(params) {
+    mount(CommentsContainer, { postId: params.postId, path: 'Question > comments' });
+  },
+});
+
 
 FlowRouter.route('/dashboard/joinedrooms', {
   action() {
