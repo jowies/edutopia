@@ -4287,6 +4287,13 @@ input.mdl-button[type="submit"] {
   right: 16px;
   top: 16px; }
 
+.mdl-card__menu__left {
+  position: absolute;
+  left: 16px;
+  top: 14px; 
+
+}
+
 /**
  * Copyright 2015 Google Inc. All Rights Reserved.
  *

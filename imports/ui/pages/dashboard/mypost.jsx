@@ -42,24 +42,31 @@ export default class MyPost extends React.Component {
   render() {
     return (
       <div>
-        {this.props.post ? this.props.post.text : <p> Loading </p>}
-        {this.props.loading ? <p>Loading Comments</p> :
-          <div>
-            <div>
+        {this.props.post ?
+          <div style={{ width: '100%' }} className="demo-card-wide mdl-card mdl-shadow--2dp ">
+            <div className="mdl-card__title">
+              <h2 style={{ paddingLeft: '36px' }} className="mdl-card__title-text">{this.props.post.text}</h2>
             </div>
+           
             <form className="flexDisplay flexDirectionRow" style={{ paddingTop: '10px' }} action="#">
               <div style={{ paddingRight: '10px', paddingLeft: '10px' }} ref="textfield1" className="mdl-textfield mdl-js-textfield flexDisplay flex9">
-                <input className="mdl-textfield__input" type="text" id="sample3" placeholder="Enter your question..." />
+                <input className="mdl-textfield__input" type="text" id="sample3" placeholder="Enter a Comment..." />
               </div>
               <div className="flexDisplay flex1">
-                <Button label="Post" />
+                <button className="mdl-button mdl-js-button mdl-button--icon">
+                  <i className="material-icons">send</i>
+                </button>
               </div>
             </form>
-            <ul className="mdl-list list"> {this.renderList()} </ul>
+           {this.props.loading ? <p>Loading Comments</p> : <ul className="mdl-list list"> {this.renderList()} </ul>}
+            <div className="mdl-card__menu__left">
+              <button className="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                <i className="material-icons">arrow_back</i>
+              </button>
+            </div>
           </div>
-        }
-        <div className="center">
-        </div>
+          : <p> Loading </p>}
+       
       </div>
     );
   }

@@ -49,19 +49,59 @@ Meteor.startup(() => {
       joinedBy: [user.id],
       joinedAmount: 3,
     });
+
     session.id = Sessions.insert({
       createdBy: user.id,
       roomId: room.id,
       active: true,
       sessionName: 'Lecture 1',
     });
-    Sessions.insert({
+    post.id = Posts.insert({
+      createdBy: 'hWNDLGg3wSbXFQJc5',
+      sessionId: session.id,
+      archived: false,
+      votes: 3,
+      votedBy: ['hWNDLGg3wSbXFQJc5', 'hWNDLGg3wSbXFQJc5', 'hWNDLGg3wSbXFQJc5'],
+      text: 'Hvor mange kroner  får jeg hvis jeg spør jævlki snilt',
+    });
+    Comments.insert({
+      postId: post.id,
+      createdAt: new Date(),
+      createdBy: 'hWNDLGg3wSbXFQJc5',
+      text: 'da får du null fuckings kroner',
+      archived: false,
+    });
+    Comments.insert({
+      postId: post.id,
+      createdAt: new Date(),
+      createdBy: 'hWNDLGg3wSbXFQJc5',
+      text: 'da får du null fuckings kroner',
+      archived: false,
+    });
+    Comments.insert({
+      postId: post.id,
+      createdAt: new Date(),
+      createdBy: 'hWNDLGg3wSbXFQJc5',
+      text: 'da får du null fuckings kroner',
+      archived: false,
+    });
+
+    session.id = Sessions.insert({
       createdBy: user.id,
       roomId: room.id,
       active: true,
       sessionName: 'Lecture 2',
     });
-    Sessions.insert({
+    post.id = Posts.insert({
+      createdBy: 'hWNDLGg3wSbXFQJc5',
+      sessionId: session.id,
+      archived: false,
+      votes: 20,
+      votedBy: ['hWNDLGg3wSbXFQJc5', 'hWNDLGg3wSbXFQJc5', 'hWNDLGg3wSbXFQJc5'],
+      text: 'Hvor mange kroner  får jeg hvis jeg spør jævlki snilt, Hvor mange kroner  får jeg hvis jeg spør jævlki snilt, Hvor mange kroner  får jeg hvis jeg spør jævlki snilt',
+    });
+
+    session.id = Sessions.insert({
       createdBy: user.id,
       roomId: room.id,
       active: true,
@@ -73,7 +113,63 @@ Meteor.startup(() => {
       archived: false,
       votes: 3,
       votedBy: ['hWNDLGg3wSbXFQJc5', 'hWNDLGg3wSbXFQJc5', 'hWNDLGg3wSbXFQJc5'],
-      text: 'Hvor mange kroner  får jeg hvis jeg spør jævlki snilt',
+      text: 'Hva gjør du?',
+    });
+    Comments.insert({
+      postId: post.id,
+      createdAt: new Date(),
+      createdBy: 'hWNDLGg3wSbXFQJc5',
+      text: 'da får du null fuckings kroner',
+      archived: false,
+    });
+    Comments.insert({
+      postId: post.id,
+      createdAt: new Date(),
+      createdBy: 'hWNDLGg3wSbXFQJc5',
+      text: 'da får du null fuckings kroner',
+      archived: false,
+    });
+    Comments.insert({
+      postId: post.id,
+      createdAt: new Date(),
+      createdBy: 'hWNDLGg3wSbXFQJc5',
+      text: 'da får du null fuckings kroner',
+      archived: false,
+    });
+    Comments.insert({
+      postId: post.id,
+      createdAt: new Date(),
+      createdBy: 'hWNDLGg3wSbXFQJc5',
+      text: 'da får du null fuckings kroner',
+      archived: false,
+    });
+    Comments.insert({
+      postId: post.id,
+      createdAt: new Date(),
+      createdBy: 'hWNDLGg3wSbXFQJc5',
+      text: 'da får du null fuckings kroner',
+      archived: false,
+    });
+    Comments.insert({
+      postId: post.id,
+      createdAt: new Date(),
+      createdBy: 'hWNDLGg3wSbXFQJc5',
+      text: 'da får du null fuckings kroner',
+      archived: false,
+    });
+    Comments.insert({
+      postId: post.id,
+      createdAt: new Date(),
+      createdBy: 'hWNDLGg3wSbXFQJc5',
+      text: 'da får du null fuckings kroner',
+      archived: false,
+    });
+    Comments.insert({
+      postId: post.id,
+      createdAt: new Date(),
+      createdBy: 'hWNDLGg3wSbXFQJc5',
+      text: 'da får du null fuckings kroner',
+      archived: false,
     });
     Comments.insert({
       postId: post.id,
