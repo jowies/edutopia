@@ -1,8 +1,8 @@
 import React from 'react';
-import Meteor from 'meteor/meteor';
-import { FlowRouter } from 'meteor/kadira:flow-router'
+import { Meteor } from 'meteor/meteor';
+import { FlowRouter } from 'meteor/kadira:flow-router';
 import { upgrade, downgrade } from '../../../helpers/upgrade.jsx';
-
+import Input from '../../../components/input.jsx';
 
 export default class LogInCard extends React.Component {
   constructor(props) {
@@ -11,18 +11,41 @@ export default class LogInCard extends React.Component {
       username: '',
       password: '',
     };
+    this.handleChangeUsername = this.handleChangeUsername.bind(this);
+    this.handleChangePassword = this.handleChangePassword.bind(this);
+    this.logIn = this.logIn.bind(this);
   }
 
   componentDidMount() {
-    upgrade(this.refs.goback, this.refs.login, this.refs.textfield1, this.refs.textfield2);
+    upgrade(this.refs.goback, this.refs.login);
   }
 
   componentDidUpdate() {
-    upgrade(this.refs.goback, this.refs.login, this.refs.textfield1, this.refs.textfield2);
+    upgrade(this.refs.goback, this.refs.login);
   }
 
   componentWillUnmount() {
-    downgrade(this.refs.goback, this.refs.login, this.refs.textfield1, this.refs.textfield2);
+    downgrade(this.refs.goback, this.refs.login);
+  }
+
+  handleChangeUsername(e) {
+    e.preventDefault();
+    this.setState({ username: e.target.value });
+  }
+
+  handleChangePassword(e) {
+    e.preventDefault();
+    this.setState({ password: e.target.value });
+  }
+
+  logIn(e) {
+    e.preventDefault();
+    const username = this.state.username;
+    const password = this.state.password;
+    Meteor.loginWithPassword(username, password);
+    if (Meteor.userId()) {
+      FlowRouter.go('/dashboard/myrooms');
+    }
   }
 
   render() {
@@ -45,14 +68,24 @@ export default class LogInCard extends React.Component {
           </div>
           <div className="mdl-card__actions">
             <form onSubmit={this.logIn} >
-              <div className="mdl-textfield mdl-js-textfield" ref="textfield1">
-                <input className="mdl-textfield__input" type="text" id="sample1" />
-                <label className="mdl-textfield__label" htmlFor="sample1">Email...</label>
-              </div>
-              <div className="mdl-textfield mdl-js-textfield" ref="textfield2">
-                <input className="mdl-textfield__input" type="text" id="sample1" />
-                <label className="mdl-textfield__label" htmlFor="sample1">Password...</label>
-              </div>
+              <Input
+                value={this.state.username}
+                onChange={this.handleChangeUsername}
+                id={'user'}
+                label={'Username'}
+                type={'text'}
+                errormessage={''}
+                error={false}
+              />
+              <Input
+                value={this.state.password}
+                onChange={this.handleChangePassword}
+                id={'password'}
+                label={'Password'}
+                type={'password'}
+                errormessage={''}
+                error={false}
+              />
             </form>
           </div>
           <div className="mdl-card__actions">
