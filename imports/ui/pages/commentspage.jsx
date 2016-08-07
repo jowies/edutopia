@@ -1,13 +1,15 @@
 import React from 'react';
+import { FlowRouter } from 'meteor/kadira:flow-router';
 import { upgrade, downgrade } from '../../ui/helpers/upgrade.jsx';
 import CommentItem from '../../ui/components/commentitem.jsx';
-
+import { insert } from '../../../imports/api/comments/methods.js';
+import { Session } from 'meteor/session';
 
 export default class CommentsPage extends React.Component {
   constructor(props) {
     super(props);
     this.renderList = this.renderList.bind(this);
-    this.postQuestion = this.postQuestion.bind(this);
+    this.postComment = this.postComment.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.goBack = this.goBack.bind(this);
     this.state = {
@@ -57,23 +59,28 @@ export default class CommentsPage extends React.Component {
   }
   handleChange(e) {
     e.preventDefault();
-    this.setState({ question: e.target.value });
+    this.setState({ comment: e.target.value });
   }
   postComment(e) {
-   /* e.preventDefault();
-    const text = this.state.question;
-    const sessionId = this.props.session._id;
-    const createdBy = Meteor.userId();
-    insert.call({ text, sessionId, createdBy }, (err, res) => {
+    e.preventDefault();
+    const text = this.state.comment;
+    const postId = this.props.post._id;
+    const createdBy = Session.get('clientId');
+    insert.call({ text, postId, createdBy }, (err, res) => {
+      console.log(err);
       console.log(res);
       if (err) {
         console.log(err);
       } else {
-        this.setState({ question: '' });
+        this.setState({ comment: '' });
       }
-    }); */
+    });
   }
-  goBack() {
+  goBack(e) {
+    e.preventDefault();
+    const path = '/joinedsession/';
+    const postId = this.props.post.sessionId;
+    FlowRouter.go(path + postId);
   }
   renderList() {
     return this.props.comments.map((comment) => (
@@ -106,9 +113,9 @@ export default class CommentsPage extends React.Component {
            
             <form onSubmit={this.postComment} className="flexDisplay flexDirectionRow" style={{ paddingTop: '10px' }} action="#">
               <div style={{ paddingRight: '10px', paddingLeft: '10px' }} ref="textfield1" className="mdl-textfield mdl-js-textfield flexDisplay flex9">
-                <input value={this.state.comment} className="mdl-textfield__input" type="text" id="sample3" placeholder="Enter a Comment..." />
+                <input value={this.state.comment} onChange={this.handleChange} className="mdl-textfield__input" type="text" id="sample3" placeholder="Enter a Comment..." />
               </div>
-              <div className="flexDisplay flex1">
+              <div className="flexDisplay flex1 flexAlignItemsCenter">
                 <button ref="button1" className="mdl-button mdl-js-button mdl-button--icon">
                   <i className="material-icons">send</i>
                 </button>
@@ -116,7 +123,7 @@ export default class CommentsPage extends React.Component {
             </form>
            {this.props.loading ? <p>Loading Comments</p> : <ul className="mdl-list list"> {this.renderList()} </ul>}
             <div className="mdl-card__menu__left">
-              <button ref="button2" className="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+              <button onClick={this.goBack} ref="button2" className="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
                 <i className="material-icons">arrow_back</i>
               </button>
             </div>

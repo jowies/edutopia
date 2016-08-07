@@ -4,6 +4,7 @@ import PostItem from '../components/postitem.jsx';
 import Button from '../components/button.jsx';
 import { Meteor } from 'meteor/meteor';
 import { insert } from '../../../imports/api/posts/methods.js';
+import { Session } from 'meteor/session';
 
 export default class MySession extends React.Component {
   constructor(props) {
@@ -57,7 +58,7 @@ export default class MySession extends React.Component {
     e.preventDefault();
     const text = this.state.question;
     const sessionId = this.props.session._id;
-    const createdBy = Meteor.userId();
+    const createdBy = Session.get('clientId');
     insert.call({ text, sessionId, createdBy }, (err, res) => {
       console.log(res);
       if (err) {
