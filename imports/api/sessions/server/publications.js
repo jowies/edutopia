@@ -4,6 +4,10 @@ import { check } from 'meteor/check';
 
 Meteor.publish('sessions.byRoom', (roomId) => {
   check(roomId, String);
-  console.log(roomId);
-  return Sessions.find({ roomId: roomId });
+  return Sessions.find({ roomId });
+});
+
+Meteor.publish('session.bySession', (sessionId) => {
+  check(sessionId, String);
+  return Sessions.find(sessionId);
 });

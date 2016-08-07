@@ -1,5 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import { Posts } from '../posts/posts.js';
 
 
 class SessionsCollection extends Mongo.Collection {
@@ -9,6 +10,7 @@ class SessionsCollection extends Mongo.Collection {
     return super.insert(userSession, callback);
   }
   remove(selector, callback) {
+    Posts.remove({ sessionId: selector });
     return super.remove(selector, callback);
   }
 
@@ -29,6 +31,8 @@ Sessions.schema = new SimpleSchema({
   active: { type: Boolean },
   closedAt: { type: Date, optional: true },
   code: { type: String, optional: true },
+  sessionName: { type: String },
+
 });
 
 Sessions.attachSchema(Sessions.schema);

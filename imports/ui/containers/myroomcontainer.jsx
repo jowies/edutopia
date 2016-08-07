@@ -14,8 +14,6 @@ const MyRoomContainer = createContainer(({ roomId }) => {
     room = Rooms.findOne({ createdBy: Meteor.userId(), _id: roomId });
     sessions = Sessions.find({ roomId }).fetch();
   }
-  console.log(room);
-  console.log(sessions);
   return {
     loading,
     connected: Meteor.status().connected,

@@ -7,7 +7,7 @@ import { _ } from 'meteor/underscore';
 import { Rooms } from './rooms.js';
 
 const ROOM_ID_ONLY = new SimpleSchema({
-  listId: { type: String },
+  roomId: { type: String },
 }).validator();
 
 export const insert = new ValidatedMethod({
@@ -41,9 +41,24 @@ export const remove = new ValidatedMethod({
   },
 });
 
+export const nickname = new ValidatedMethod({
+  name: 'rooms.nickname',
+  validate: new SimpleSchema({
+    roomId: { type: String },
+  }).validator(),
+  run({ roomId }) {
+    const room = Rooms.findOne(roomId);
+    if (room) {
+      return room.nickname;
+    }
+    return !!room;
+  },
+});
+
 const ROOMS_METHODS = _.pluck([
   insert,
   remove,
+  nickname,
 ], 'name');
 
 if (Meteor.isServer) {

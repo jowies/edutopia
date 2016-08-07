@@ -29,3 +29,5 @@ accounts-base
 aldeed:collection2
 dburles:collection-helpers
 accounts-password
+u2622:persistent-session
+random

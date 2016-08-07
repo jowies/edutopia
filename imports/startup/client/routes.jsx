@@ -7,6 +7,7 @@ import Dashboard from '../../ui/layouts/dashboard.jsx';
 import MyRoomsListContainer from '../../ui/containers/myroomslistcontainer.jsx';
 import MyRoomContainer from '../../ui/containers/myroomcontainer.jsx';
 import JoinedRoomsListContainer from '../../ui/containers/joinedroomslistcontainer.jsx';
+import MySessionContainer from '../../ui/containers/mysessioncontainer.jsx';
 import AboutUs from '../../ui/pages/homepage/aboutus.jsx';
 import Contact from '../../ui/pages/homepage/contact.jsx';
 import SignUp from '../../ui/pages/signup.jsx';
@@ -19,7 +20,7 @@ FlowRouter.route('/', {
 
 FlowRouter.route('/dashboard', {
   action() {
-    mount(Dashboard);
+    mount(Dashboard, { path: 'Home' });
   },
 });
 
@@ -31,7 +32,13 @@ FlowRouter.route('/dashboard/myrooms', {
 
 FlowRouter.route('/dashboard/myrooms/:roomId', {
   action(params) {
-    mount(Dashboard, { content: <MyRoomContainer roomId={params.roomId} /> });
+    mount(Dashboard, { content: <MyRoomContainer roomId={params.roomId} />, path: 'nickname' });
+  },
+});
+
+FlowRouter.route('/session/:sessionId', {
+  action(params) {
+    mount(Dashboard, { content: <MySessionContainer sessionId={params.sessionId} />, path: 'session' });
   },
 });
 

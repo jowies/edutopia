@@ -1,19 +1,28 @@
 import React from 'react';
+import Meteor from 'meteor/meteor';
+import { FlowRouter } from 'meteor/kadira:flow-router'
 import { upgrade, downgrade } from '../../../helpers/upgrade.jsx';
 
 
 export default class LogInCard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      password: '',
+    };
+  }
 
   componentDidMount() {
-    upgrade(this.refs.signup, this.refs.login, this.refs.textfield1, this.refs.textfield2);
+    upgrade(this.refs.goback, this.refs.login, this.refs.textfield1, this.refs.textfield2);
   }
 
   componentDidUpdate() {
-    upgrade(this.refs.signup, this.refs.login, this.refs.textfield1, this.refs.textfield2);
+    upgrade(this.refs.goback, this.refs.login, this.refs.textfield1, this.refs.textfield2);
   }
 
   componentWillUnmount() {
-    downgrade(this.refs.signup, this.refs.login, this.refs.textfield1, this.refs.textfield2);
+    downgrade(this.refs.goback, this.refs.login, this.refs.textfield1, this.refs.textfield2);
   }
 
   render() {
@@ -35,7 +44,7 @@ export default class LogInCard extends React.Component {
             </div>
           </div>
           <div className="mdl-card__actions">
-            <form action="#">
+            <form onSubmit={this.logIn} >
               <div className="mdl-textfield mdl-js-textfield" ref="textfield1">
                 <input className="mdl-textfield__input" type="text" id="sample1" />
                 <label className="mdl-textfield__label" htmlFor="sample1">Email...</label>
@@ -49,7 +58,7 @@ export default class LogInCard extends React.Component {
           <div className="mdl-card__actions">
             <button
               onClick={this.props.goBack}
-              ref="signup"
+              ref="goback"
               className="mdl-button
                 mdl-button--raised
                 mdl-button--colored

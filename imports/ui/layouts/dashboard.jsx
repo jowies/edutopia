@@ -1,8 +1,16 @@
 import React from 'react';
 import { upgrade, downgrade } from '../helpers/upgrade.jsx';
+import { nickname } from '../../api/rooms/methods.js';
+import { FlowRouter } from 'meteor/kadira:flow-router';
 
 
 export default class Dashboard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      nickname: '',
+    };
+  }
 
   componentDidMount() {
     upgrade(this.refs.layout);
@@ -16,6 +24,23 @@ export default class Dashboard extends React.Component {
     downgrade(this.refs.layout);
   }
 
+  getPath() {
+    const roomId = FlowRouter.getParam('roomId');
+    if (this.props.path === 'nickname' && this.state.nickname.length < 1) {
+      nickname.call({ roomId }, (err, res) => {
+        if (err) {
+          console.log(err);
+        } else {
+          this.setState({ nickname: res });
+        }
+      });
+    }
+    if (this.props.path === 'nickname') {
+      const string = 'My Rooms > ';
+      return string + this.state.nickname;
+    }
+    return this.props.path;
+  }
 
   render() {
     return (
@@ -27,7 +52,7 @@ export default class Dashboard extends React.Component {
         <header className="mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600" >
           <div className="mdl-layout__header-row">
             <span className="mdl-layout-title">
-              {this.props.path}
+              {this.getPath()}
             </span>
           </div>
         </header>
@@ -52,7 +77,7 @@ export default class Dashboard extends React.Component {
             <div className="mdl-layout-spacer"></div>
           </nav>
         </div>
-        <main className="mdl-layout__content">
+        <main className="mdl-layout__content mdl-color--grey-100">
           <div className="page-content">{this.props.content}</div>
         </main>
       </div>

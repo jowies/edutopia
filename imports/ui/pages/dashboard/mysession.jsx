@@ -1,9 +1,8 @@
 import React from 'react';
 import { upgrade, downgrade } from '../../helpers/upgrade.jsx';
-import RoomItem from '../../components/roomitem.jsx';
+import PostItem from '../../components/postitem.jsx';
 
-
-export default class MyRooms extends React.Component {
+export default class MySession extends React.Component {
   constructor(props) {
     super(props);
     this.renderList = this.renderList.bind(this);
@@ -31,29 +30,24 @@ export default class MyRooms extends React.Component {
     }
   }
 
-
   renderList() {
-    return this.props.rooms.map((room) => (
-      <RoomItem room={room} key={room._id} />
+    return this.props.posts.map((post) => (
+      <PostItem room={post} key={post._id} />
     ));
   }
 
   render() {
     return (
       <div>
-      {this.props.loading ?
-        <div
-          className="mdl-spinner
-          mdl-spinner--single-color mdl-js-spinner is-active"
-          ref="spinner"
-        >
-        </div> : <ul className="mdl-list list"> {this.renderList()} </ul>}
+        {!this.props.session ? <p> Loading</p> : this.props.session.sessionName}
+        {this.props.loading ? <p>Loading sessions</p> : <ul className="mdl-list list"> {this.renderList()} </ul>}
       </div>
     );
   }
 }
 
-MyRooms.propTypes = {
+MySession.propTypes = {
   loading: React.PropTypes.bool,
-  rooms: React.PropTypes.array,
+  session: React.PropTypes.object,
+  posts: React.PropTypes.array,
 };

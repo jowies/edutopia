@@ -5,15 +5,15 @@ import { upgrade, downgrade } from '../../../helpers/upgrade.jsx';
 export default class EntryCard extends React.Component {
 
   componentDidMount() {
-    upgrade(this.refs.signup, this.refs.login);
+    upgrade(/* this.refs.signup, */this.refs.login);
   }
 
   componentDidUpdate() {
-    upgrade(this.refs.signup, this.refs.login);
+    upgrade(/* this.refs.signup, */this.refs.login);
   }
 
   componentWillUnmount() {
-    downgrade(this.refs.signup, this.refs.login);
+    downgrade(/* this.refs.signup, */this.refs.login);
   }
 
   render() {
@@ -57,7 +57,7 @@ export default class EntryCard extends React.Component {
             <div className="center">
               <button
                 onClick={this.props.showLogInCard}
-                ref="signup"
+                ref="login"
                 className="mdl-button
                   mdl-button--raised
                   mdl-button--colored
@@ -71,7 +71,7 @@ export default class EntryCard extends React.Component {
               </button>
             </div>
           </div>
-          <div className="mdl-card__actions">
+          {/* <div className="mdl-card__actions">
             <div className="center">
               <button
                 onClick={this.props.showSignUpCard}
@@ -80,13 +80,13 @@ export default class EntryCard extends React.Component {
                   mdl-button--raised
                   mdl-js-button
                   mdl-js-ripple-effect"
-                ref="login"
+                ref="signup"
                 style={{ width: '100%' }}
               >
                Sign up
               </button>
             </div>
-          </div>
+          </div>*/}
         </div>
       </div>
     );

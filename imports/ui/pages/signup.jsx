@@ -136,7 +136,7 @@ export default class SignUp extends React.Component {
   handleChangeCheckbox(e) {
     console.log(e.target.checked);
     this.setState({ checked: e.target.checked });
-    this.isReady(undefined,undefined,undefined, e.target.checked);
+    this.isReady(undefined, undefined, undefined, e.target.checked);
   }
 
   isReady(email = this.state.emailError,

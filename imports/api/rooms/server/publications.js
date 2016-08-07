@@ -11,7 +11,6 @@ Meteor.publish('rooms.joinedByUser', function roomsJoined() {
 });
 
 Meteor.publish('room.createdByUser', function roomUser(roomId) {
-  console.log(roomId);
   check(roomId, String);
   return Rooms.find({ createdBy: this.userId, _id: roomId });
 });

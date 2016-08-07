@@ -5,6 +5,7 @@ import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 import { _ } from 'meteor/underscore';
 
 import { Sessions } from './sessions.js';
+import { Posts } from '../posts/posts.js';
 
 const ROOM_ID_ONLY = new SimpleSchema({
   listId: { type: String },
@@ -16,12 +17,12 @@ export const insert = new ValidatedMethod({
     nickname: { type: String },
   }).validator(),
   run({ nickname }) {
-    const room = {
+    const session = {
       createdAt: new Date(),
       createdBy: this.userId,
       nickname,
     };
-    return Sessions.insert(room);
+    return Sessions.insert(session);
   },
 });
 
@@ -34,6 +35,8 @@ export const remove = new ValidatedMethod({
       throw new Meteor.Error('sessions.remove.accessDenied',
         'You don\'t have permission to remove this room.');
     }
+
+    Posts.remove({ sessionId });
 
     Sessions.remove(sessionId);
   },
