@@ -13,16 +13,17 @@ const COMMENT_ID_ONLY = new SimpleSchema({
 export const insert = new ValidatedMethod({
   name: 'comments.insert',
   validate: new SimpleSchema({
-    nickname: { type: String },
+    text: { type: String },
+    postId: { type: String },
+    createdBy: { type: String },
   }).validator(),
-  run({ text, sessionId, postId }) {
+  run({ text, postId, createdBy }) {
     const comment = {
       postId,
       createdAt: new Date(),
-      createdBy: sessionId,      // votes: 0,
+      createdBy,      // votes: 0,
       // votedBy: [],
       text,
-      sessionId,
       archived: false,
     };
     return Comments.insert(comment);
