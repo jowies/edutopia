@@ -16,7 +16,7 @@ export const insert = new ValidatedMethod({
   validate: new SimpleSchema({
     text: { type: String },
     sessionId: { type: String },
-    poster: { type: String },
+    createdBy: { type: String },
   }).validator(),
   run({ text, sessionId, createdBy }) {
     const post = {
@@ -57,17 +57,20 @@ export const upvote = new ValidatedMethod({
   run({ postId, votedBy }) {
     const post = Posts.findOne(postId);
 
-    if (_.include(post.votedBy, postId)) {
+    if (_.include(post.votedBy, votedBy)) {
       Posts.update(post._id, {
         $pull: { votedBy },
         $inc: { votes: -1, sortvotes: -1 },
       });
-    } else if (!_.include(post.votedBy, postId)) {
+      return (-1);
+    } else if (!_.include(post.votedBy, votedBy)) {
       Posts.update(post._id, {
         $addToSet: { votedBy },
         $inc: { votes: 1, sortvotes: 1 },
       });
+      return (1);
     }
+    return 0;
   },
 });
 

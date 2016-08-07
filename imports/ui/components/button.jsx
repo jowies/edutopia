@@ -25,7 +25,8 @@ export default class Button extends React.Component {
           mdl-button--primary
           mdl-button--raised
           mdl-js-button
-          mdl-js-ripple-effect"
+          mdl-js-ripple-effect
+          mdl-color--light-blue-900"
         ref="button"
       >
         {this.props.label}

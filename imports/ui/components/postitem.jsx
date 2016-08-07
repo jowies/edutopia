@@ -1,38 +1,53 @@
 import React from 'react';
+import { Meteor } from 'meteor/meteor';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import Button from '../components/button.jsx';
+import { upvote } from '../../../imports/api/posts/methods.js';
+import { Comments } from '../../api/comments/comments.js';
 
 export default class PostItem extends React.Component {
   constructor(props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
+    this.goToComments = this.goToComments.bind(this);
     this.upVote = this.upVote.bind(this);
     // add funksjon som finner antall kommentarer
-    const numberOfComments = 0;
-    const commentString = 'comments (' + numberOfComments + ')';
-    this.state = { voted: true, opacity: 0.5, comments: commentString };
+    const postId = this.props.post._id;
+    const commentsHandle = Meteor.subscribe('comments.byPost', postId);
+    const loading = !commentsHandle.ready;
+    if (!loading) {
+      const comments = Comments.find({ postId }).fetch();
+      const numberOfComments = comments.length;
+      const commentString = 'comments (' + numberOfComments + ')';
+      this.state = { voted: true, opacity: 0.5, comments: commentString };
+    }
   }
 
-  handleClick(e) {
+  goToComments(e) {
     console.log(this.props.post);
     e.preventDefault();
-    const route = '/session/post/';
+    const route = '/comments/';
     FlowRouter.go(route + this.props.post._id);
   }
   upVote() {
-    console.log('voted');
-    if (this.state.voted === true) {
-      this.setState({
-        voted: false,
-        opacity: 1,
-      });
-    }
-    if (this.state.voted === false) {
-      this.setState({
-        voted: true,
-        opacity: 0.5,
-      });
-    }
+    const postId = this.props.post._id;
+    const votedBy = Meteor.userId();
+    upvote.call({ postId, votedBy }, (err, res) => {
+      console.log(err);
+      console.log(res);
+      if (res === 0) {
+        console.log('error when voting');
+      } else if (res === -1) {
+        this.setState({
+          voted: false,
+          opacity: 1,
+        });
+      } else if (res === 1) {
+        this.setState({
+          voted: true,
+          opacity: 0.5,
+        });
+      }
+    });
   }
 
   render() {
