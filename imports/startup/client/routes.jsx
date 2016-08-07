@@ -48,7 +48,7 @@ FlowRouter.route('/dashboard/myrooms/:roomId', {
 
 FlowRouter.route('/mysession/:sessionId', {
   action(params) {
-    mount(Dashboard, { content: <MySessionContainer sessionId={params.sessionId} />, path: 'session' });
+    mount(Dashboard, { content: <MySessionContainer sessionId={params.sessionId} />, path: 'Session' });
   },
 });
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { upgrade, downgrade } from '../helpers/upgrade.jsx';
 import { nickname } from '../../api/rooms/methods.js';
+import { code } from '../../api/sessions/methods.js';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 
 
@@ -12,6 +13,7 @@ export default class Dashboard extends React.Component {
     this.state = {
       nickname: '',
       username: userId,
+      code: '',
     };
   }
 
@@ -45,6 +47,26 @@ export default class Dashboard extends React.Component {
     return this.props.path;
   }
 
+  getCode() {
+    const sessionId = FlowRouter.getParam('sessionId');
+    if (this.props.path === 'Session' && this.state.nickname.length < 1) {
+      code.call({ sessionId }, (err, res) => {
+        if (err) {
+          console.log(err);
+        } else {
+          this.setState({ code: res });
+        }
+      });
+    }
+    return (
+      <div style={{ float: 'right' }}>
+        <span className="mdl-layout-title">
+          {this.state.code}
+        </span>
+      </div>
+      );
+  }
+
   render() {
     return (
       <div
@@ -58,11 +80,7 @@ export default class Dashboard extends React.Component {
               {this.getPath()}
             </span>
             <div className="mdl-layout-spacer"></div>
-            <div style={{ float: 'right' }}>
-              <a href="/dashboard/myrooms">
-                {this.state.username}
-              </a>
-            </div>
+            {this.getCode()}
           </div>
         </header>
         <div className="mdl-layout__drawer mdl-color--light-green-900 drawer">
