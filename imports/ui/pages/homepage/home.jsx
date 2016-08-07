@@ -59,9 +59,7 @@ export default class Home extends React.Component {
   render() {
     return (
       <div className="mdl-grid">
-        <div className="mdl-cell mdl-cell--4-col">
-        </div>
-        <div className="mdl-cell mdl-cell--4-col">
+        <div className="mdl-cell mdl-cell--12-col">
           {this.getCardContent()}
         </div>
       </div>
