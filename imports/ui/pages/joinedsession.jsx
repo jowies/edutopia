@@ -59,7 +59,8 @@ export default class MySession extends React.Component {
     const text = this.state.question;
     const sessionId = this.props.session._id;
     const createdBy = Session.get('clientId');
-    insert.call({ text, sessionId, createdBy }, (err, res) => {
+    const authorType = 'Student';
+    insert.call({ text, sessionId, createdBy, authorType }, (err, res) => {
       console.log(res);
       if (err) {
         console.log(err);

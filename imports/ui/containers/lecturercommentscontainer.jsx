@@ -4,7 +4,7 @@ import { Comments } from '../../api/comments/comments.js';
 import { Posts } from '../../api/posts/posts.js';
 import MyPost from '../pages/dashboard/mypost.jsx';
 
-const MyPostContainer = createContainer(({ postId }) => {
+const LecturerCommentsContainer = createContainer(({ postId }) => {
   let post;
   let comments;
   const postHandle = Meteor.subscribe('post.byPost', postId);
@@ -22,4 +22,4 @@ const MyPostContainer = createContainer(({ postId }) => {
   };
 }, MyPost);
 
-export default MyPostContainer;
+export default LecturerCommentsContainer;

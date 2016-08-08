@@ -35,6 +35,7 @@ Posts.schema = new SimpleSchema({
   text: { type: String, max: 240 },
   sessionId: { type: String, regEx: SimpleSchema.RegEx.Id },
   archived: { type: Boolean },
+  authorType: { type: String },
 });
 
 Posts.attachSchema(Posts.schema);

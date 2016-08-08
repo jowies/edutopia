@@ -1,15 +1,16 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { FlowRouter } from 'meteor/kadira:flow-router';
-import { upvote } from '../../../imports/api/posts/methods.js';
+import { upvote, remove } from '../../../imports/api/posts/methods.js';
 import { Comments } from '../../api/comments/comments.js';
 import { upgrade, downgrade } from '../helpers/upgrade.jsx';
 
-export default class PostItem extends React.Component {
+export default class PostItemLecturer extends React.Component {
   constructor(props) {
     super(props);
     this.goToComments = this.goToComments.bind(this);
     this.upVote = this.upVote.bind(this);
+    this.deletePost = this.deletePost.bind(this);
     // add funksjon som finner antall kommentarer
     const postId = this.props.post._id;
     const commentsHandle = Meteor.subscribe('comments.byPost', postId);
@@ -36,7 +37,7 @@ export default class PostItem extends React.Component {
   goToComments(e) {
     console.log(this.props.post);
     e.preventDefault();
-    const route = '/comments/';
+    const route = '/dashboard/comments/';
     FlowRouter.go(route + this.props.post._id);
   }
   upVote() {
@@ -58,6 +59,11 @@ export default class PostItem extends React.Component {
       }
     });
   }
+  deletePost(e) {
+    e.preventDefault();
+    const postId = this.props.post._id;
+    remove.call({ postId });
+  }
 
   render() {
     return (
@@ -77,10 +83,19 @@ export default class PostItem extends React.Component {
           <div style={{ width: '100%' }}>
             <a
               style={{ float: 'right' }}
+              onClick={this.deletePost}
+              ref="button"
+              className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+            >
+            Delete
+            </a>
+            <a
+              style={{ float: 'right' }}
               onClick={this.goToComments}
               ref="button"
               className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
             >
+            
               {this.state.comments}
             </a>
           </div>
@@ -93,6 +108,6 @@ export default class PostItem extends React.Component {
 /* <button onClick={this.goToComments} ref="button" className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary mdl-color--light-blue-900">
           {this.state.comments}
         </button> */
-PostItem.propTypes = {
+PostItemLecturer.propTypes = {
   post: React.PropTypes.object,
 };
