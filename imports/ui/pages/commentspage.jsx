@@ -66,7 +66,8 @@ export default class CommentsPage extends React.Component {
     const text = this.state.comment;
     const postId = this.props.post._id;
     const createdBy = Session.get('clientId');
-    insert.call({ text, postId, createdBy }, (err, res) => {
+    const authorType = 'Student';
+    insert.call({ text, postId, createdBy, authorType }, (err, res) => {
       console.log(err);
       console.log(res);
       if (err) {
