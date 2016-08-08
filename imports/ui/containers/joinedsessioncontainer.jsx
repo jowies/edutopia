@@ -12,7 +12,7 @@ const JoinedSessionContainer = createContainer(({ sessionId }) => {
   const loading = !sessionHandle.ready && !postsHandle.ready;
   if (!loading) {
     session = Sessions.findOne({ _id: sessionId });
-    posts = Posts.find({ sessionId }).fetch();
+    posts = Posts.find({ sessionId }, { sort: { createdAt: -1 } }).fetch();
     // console.log(posts);
   }
   return {

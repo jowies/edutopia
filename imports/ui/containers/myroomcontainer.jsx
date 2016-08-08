@@ -12,7 +12,7 @@ const MyRoomContainer = createContainer(({ roomId }) => {
   const loading = !roomHandle.ready && !sessionsHandle.ready;
   if (!loading) {
     room = Rooms.findOne({ createdBy: Meteor.userId(), _id: roomId });
-    sessions = Sessions.find({ roomId }).fetch();
+    sessions = Sessions.find({ roomId }, { sort: { createdAt: -1 } }).fetch();
   }
   return {
     loading,

@@ -4,6 +4,8 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { upvote, remove } from '../../../imports/api/posts/methods.js';
 import { Comments } from '../../api/comments/comments.js';
 import { upgrade, downgrade } from '../helpers/upgrade.jsx';
+import { _ } from 'meteor/underscore';
+
 
 export default class PostItemLecturer extends React.Component {
   constructor(props) {
@@ -12,15 +14,6 @@ export default class PostItemLecturer extends React.Component {
     this.upVote = this.upVote.bind(this);
     this.deletePost = this.deletePost.bind(this);
     // add funksjon som finner antall kommentarer
-    const postId = this.props.post._id;
-    const commentsHandle = Meteor.subscribe('comments.byPost', postId);
-    const loading = !commentsHandle.ready;
-    if (!loading) {
-      const comments = Comments.find({ postId }).fetch();
-      const numberOfComments = comments.length;
-      const commentString = 'comments (' + numberOfComments + ')';
-      this.state = { voted: true, opacity: 0.5, comments: commentString };
-    }
   }
   componentDidMount() {
     upgrade(this.refs.button);
@@ -34,31 +27,37 @@ export default class PostItemLecturer extends React.Component {
     downgrade(this.refs.button);
   }
 
+  getCommentText() {
+    const commentString = 'comments (' + this.props.post.commentAmount + ')';
+    return commentString;
+  }
+
+  getOpacity() {
+    const voters = this.props.post.votedBy;
+    if (_.include(voters, Meteor.userId())) {
+      return 1;
+    }
+    return 0.5;
+  }
+
   goToComments(e) {
     console.log(this.props.post);
     e.preventDefault();
     const route = '/dashboard/comments/';
     FlowRouter.go(route + this.props.post._id);
   }
-  upVote() {
+
+  upVote(e) {
+    e.preventDefault();
     const postId = this.props.post._id;
     const votedBy = Meteor.userId();
     upvote.call({ postId, votedBy }, (err, res) => {
-      if (res === 0) {
-        console.log('error when voting');
-      } else if (res === -1) {
-        this.setState({
-          voted: false,
-          opacity: 1,
-        });
-      } else if (res === 1) {
-        this.setState({
-          voted: true,
-          opacity: 0.5,
-        });
+      if (err) {
+        console.log(err);
       }
     });
   }
+
   deletePost(e) {
     e.preventDefault();
     const postId = this.props.post._id;
@@ -69,7 +68,7 @@ export default class PostItemLecturer extends React.Component {
     return (
       <li className="mdl-list__item mdl-list__item--three-line listElement">
         <span className="mdl-list__item-secondary-content" style={{ marginLeft: '0px', paddingRight: '20px' }}>
-          <div onClick={this.upVote} className="mdl-list__item-secondary-action" style={{ opacity: this.state.opacity }}>
+          <div onClick={this.upVote} className="mdl-list__item-secondary-action" style={{ opacity: this.getOpacity() }}>
             <i style={{ fontSize: '32px' }} className="material-icons center">keyboard_arrow_up</i>
           </div>
           <span style={{ fontSize: '16px' }} className="mdl-list__item-secondary-info center">{this.props.post.votes}</span>
@@ -96,7 +95,7 @@ export default class PostItemLecturer extends React.Component {
               className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
             >
             
-              {this.state.comments}
+              {this.getCommentText()}
             </a>
           </div>
         </span>
