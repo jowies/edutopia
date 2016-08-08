@@ -14,14 +14,21 @@ const ROOM_ID_ONLY = new SimpleSchema({
 
 export const insert = new ValidatedMethod({
   name: 'sessions.insert',
-  validate: new SimpleSchema({
-    nickname: { type: String },
-  }).validator(),
-  run({ nickname }) {
+  validate: null,
+  run({ roomId }) {
+    console.log(roomId);
+    const room = Rooms.findOne(roomId);
+    Rooms.update(roomId, {
+      $inc: { sessionAmount: 1 },
+    });
+    const def = 'Session ';
+    const sessionName = def + (room.sessionAmount + 1).toString();
     const session = {
       createdAt: new Date(),
       createdBy: this.userId,
-      nickname,
+      roomId,
+      active: true,
+      sessionName,
     };
     return Sessions.insert(session);
   },

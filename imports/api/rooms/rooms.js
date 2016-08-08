@@ -31,6 +31,7 @@ Rooms.schema = new SimpleSchema({
   joinedBy: { type: [String] },
   joinedAmount: { type: Number, defaultValue: 0 },
   nickname: { type: String, max: 20 },
+  sessionAmount: { type: Number, defaultValue: 0 },
 });
 
 Rooms.attachSchema(Rooms.schema);

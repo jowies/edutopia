@@ -43,8 +43,6 @@ export default class PostItem extends React.Component {
     const postId = this.props.post._id;
     const votedBy = Meteor.userId();
     upvote.call({ postId, votedBy }, (err, res) => {
-      console.log(err);
-      console.log(res);
       if (res === 0) {
         console.log('error when voting');
       } else if (res === -1) {

@@ -5,6 +5,7 @@ import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 import { _ } from 'meteor/underscore';
 
 import { Comments } from './comments.js';
+import { Posts } from '../posts/posts.js';
 
 const COMMENT_ID_ONLY = new SimpleSchema({
   commentId: { type: String },
@@ -26,6 +27,9 @@ export const insert = new ValidatedMethod({
       text,
       archived: false,
     };
+    Posts.update(postId, {
+      $inc: { commentAmount: 1 },
+    });
     return Comments.insert(comment);
   },
 });
@@ -39,6 +43,9 @@ export const remove = new ValidatedMethod({
       throw new Meteor.Error('comments.remove.accessDenied',
         'You don\'t have permission to remove this comment.');
     }
+    Posts.update(comment.postId, {
+      $inc: { commentAmount: -1 },
+    });
     Comments.remove(commentId);
   },
 });

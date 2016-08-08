@@ -1,11 +1,13 @@
 import React from 'react';
 import { upgrade, downgrade } from '../../helpers/upgrade.jsx';
 import SessionItem from '../../components/sessionitem.jsx';
+import { insert } from '../../../api/sessions/methods.js';
 
 export default class MyRoom extends React.Component {
   constructor(props) {
     super(props);
     this.renderList = this.renderList.bind(this);
+    this.createSession = this.createSession.bind(this);
   }
 
   componentDidMount() {
@@ -30,7 +32,15 @@ export default class MyRoom extends React.Component {
       downgrade(this.refs.spinner);
     }
   }
-  createSession() {
+  createSession(e) {
+    e.preventDefault();
+    const roomId = this.props.room._id;
+    console.log(roomId);
+    insert.call({ roomId }, (err) => {
+      if (err) {
+        console.log(err);
+      }
+    });
   }
 
   renderList() {
