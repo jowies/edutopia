@@ -63,6 +63,7 @@ Meteor.startup(() => {
       votes: 3,
       votedBy: ['hWNDLGg3wSbXFQJc5', 'hWNDLGg3wSbXFQJc5', 'hWNDLGg3wSbXFQJc5'],
       text: 'Hvor mange kroner  får jeg hvis jeg spør jævlki snilt',
+      authorType: 'Student',
     });
     Comments.insert({
       postId: post.id,
@@ -99,6 +100,7 @@ Meteor.startup(() => {
       votes: 20,
       votedBy: ['hWNDLGg3wSbXFQJc5', 'hWNDLGg3wSbXFQJc5', 'hWNDLGg3wSbXFQJc5'],
       text: 'Hvor mange kroner  får jeg hvis jeg spør jævlki snilt, Hvor mange kroner  får jeg hvis jeg spør jævlki snilt, Hvor mange kroner  får jeg hvis jeg spør jævlki snilt',
+      authorType: 'Student',
     });
 
     session.id = Sessions.insert({
@@ -114,6 +116,7 @@ Meteor.startup(() => {
       votes: 3,
       votedBy: ['hWNDLGg3wSbXFQJc5', 'hWNDLGg3wSbXFQJc5', 'hWNDLGg3wSbXFQJc5'],
       text: 'Hva gjør du?',
+      authorType: 'Teacher',
     });
     Comments.insert({
       postId: post.id,

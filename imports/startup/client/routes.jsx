@@ -10,7 +10,7 @@ import JoinedRoomsListContainer from '../../ui/containers/joinedroomslistcontain
 import MySessionContainer from '../../ui/containers/mysessioncontainer.jsx';
 import CommentsContainer from '../../ui/containers/commentscontainer.jsx';
 import JoinedSessionContainer from '../../ui/containers/joinedsessioncontainer.jsx';
-import MyPostContainer from '../../ui/containers/mypostcontainer.jsx';
+import LecturerCommentsContainer from '../../ui/containers/lecturercommentscontainer.jsx';
 import AboutUs from '../../ui/pages/homepage/aboutus.jsx';
 import Contact from '../../ui/pages/homepage/contact.jsx';
 import SignUp from '../../ui/pages/signup.jsx';
@@ -60,7 +60,7 @@ FlowRouter.route('/joinedsession/:sessionId', {
 
 FlowRouter.route('/dashboard/comments/:postId', {
   action(params) {
-    mount(Dashboard, { content: <MyPostContainer postId={params.postId} />, path: 'Question > comments' });
+    mount(LecturerCommentsContainer, { postId: params.postId, path: 'Question > comments' });
   },
 });
 FlowRouter.route('/comments/:postId', {
