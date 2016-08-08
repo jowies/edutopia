@@ -25,8 +25,6 @@ export default class HomePage extends React.Component {
             <nav className="mdl-navigation mdl-layout--large-screen-only">
               <a className="mdl-navigation__link" href="/">Home</a>
               <a className="mdl-navigation__link" href="/AboutUs">About Edutopia</a>
-              <a className="mdl-navigation__link" href="/Contact">Contact</a>
-              <a className="mdl-navigation__link" href="#">Get started</a>
             </nav>
           </div>
         </header>
@@ -35,8 +33,7 @@ export default class HomePage extends React.Component {
           <nav className="mdl-navigation">
             <a className="mdl-navigation__link" href="/">Home</a>
             <a className="mdl-navigation__link" href="/AboutUs">About Edutopia</a>
-            <a className="mdl-navigation__link" href="/Contact">Contact</a>
-            <a className="mdl-navigation__link" href="#">Get started</a>
+
           </nav>
         </div>
         <main className="mdl-layout__content center">
@@ -50,4 +47,11 @@ export default class HomePage extends React.Component {
 HomePage.propTypes = {
   content: React.PropTypes.object,
 };
+/*
+
+              <a className="mdl-navigation__link" href="/Contact">Contact</a>
+              <a className="mdl-navigation__link" href="#">Get started</a>
+            <a className="mdl-navigation__link" href="/Contact">Contact</a>
+            <a className="mdl-navigation__link" href="#">Get started</a>
+*/
 
