@@ -45,7 +45,9 @@ export default class MySession extends React.Component {
             <input className="mdl-textfield__input" type="text" id="sample3" placeholder="Enter your question..." />
           </div>
           <div className="flexDisplay flex1">
-            <Button label="Post" />
+            <button className="mdl-button mdl-js-button mdl-button--icon">
+                  <i className="material-icons">send</i>
+                </button>
           </div>
         </form>
         {this.props.loading ? <p>Loading sessions</p> : <ul className="mdl-list list"> {this.renderList()} </ul>}

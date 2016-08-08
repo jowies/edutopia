@@ -61,32 +61,37 @@ export default class PostItem extends React.Component {
 
   render() {
     return (
-      <li className="mdl-list__item mdl-list__item--three-line listElement" >
-      <span className="mdl-list__item-secondary-content" style={{ paddingRight: '10px', marginLeft: '0px' }}>
-          <div onClick={this.upVote} className="mdl-list__item-secondary-action" style={{ opacity: this.state.opacity }}>
-            <i style={{ fontSize: '32px' }} className="material-icons center">keyboard_arrow_up</i>
-          </div>
-          <span style={{ fontSize: '16px' }} className="mdl-list__item-secondary-info center">{this.props.post.votes}</span>
-        </span>
-        <span className="mdl-list__item-primary-content">
-          <i className="material-icons mdl-list__item-avatar">person</i>
-          <span style={{ paddingLeft: '10px' }}>
-            {this.props.post.text}
+      <li className="mdl-list__item mdl-list__item--three-line listElement">
+          <span className="mdl-list__item-secondary-content" style={{ marginLeft: '0px', paddingRight: '20px' }}>
+            <div onClick={this.upVote} className="mdl-list__item-secondary-action" style={{ opacity: this.state.opacity }}>
+              <i style={{ fontSize: '32px' }} className="material-icons center">keyboard_arrow_up</i>
+            </div>
+            <span style={{ fontSize: '16px' }} className="mdl-list__item-secondary-info center">{this.props.post.votes}</span>
           </span>
-        </span>
-
-        
-        <span className="center">
-          <button onClick={this.goToComments} ref="button" className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary mdl-color--light-blue-900">
-            {this.state.comments}
-          </button>
-        </span>
+          <span className="mdl-list__item-primary-content" style={{ maxWidth: '90%', float: 'right' }}>
+            <i className="material-icons mdl-list__item-avatar mdl-cell--hide-tablet mdl-cell--hide-phone">person</i>
+            <span style={{ paddingLeft: '10px', wordWrap: 'break-word' }}>
+              {this.props.post.text}
+            </span>
+            <div style={{ width: '100%' }}>
+              <a
+                style={{ float: 'right' }}
+                onClick={this.goToComments}
+                ref="button"
+                className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+              >
+                {this.state.comments}
+              </a>
+            </div>
+          </span>
         
       </li>
     );
   }
 }
-
+/* <button onClick={this.goToComments} ref="button" className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary mdl-color--light-blue-900">
+          {this.state.comments}
+        </button> */
 PostItem.propTypes = {
   post: React.PropTypes.object,
 };

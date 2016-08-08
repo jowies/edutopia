@@ -88,6 +88,9 @@ export default class MySession extends React.Component {
               Edutopia
             </span>
             <div className="mdl-layout-spacer"></div>
+              <a style={{ float: 'right' }} href="/" className="mdl-navigation__link mdl-color-text--white">
+                log out
+              </a>
           </div>
         </header>
         <div className="mdl-color--grey-100 mdl-color-text--grey-600">
@@ -96,7 +99,9 @@ export default class MySession extends React.Component {
               <input value={this.state.question} onChange={this.handleChange} className="mdl-textfield__input" type="text" id="sample3" placeholder="Enter your question..." />
             </div>
             <div className="flexDisplay flex1 flexAlignItemsCenter">
-              <Button onClick={this.postQuestion} label="Post" />
+              <button className="mdl-button mdl-js-button mdl-button--icon">
+                  <i className="material-icons">send</i>
+                </button>
             </div>
           </form>
           {this.props.loading ? <p>Loading sessions</p> : <ul className="mdl-list list"> {this.renderList()} </ul>}

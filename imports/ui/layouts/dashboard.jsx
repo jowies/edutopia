@@ -10,6 +10,7 @@ export default class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     const userId = Meteor.userId();
+    this.logOut = this.logOut.bind(this);
     this.state = {
       nickname: '',
       username: userId,
@@ -66,6 +67,12 @@ export default class Dashboard extends React.Component {
       </div>
       );
   }
+  logOut() {
+    Meteor.logout(callback => {
+      console.log(callback);
+    });
+    FlowRouter.go('/');
+  }
 
   render() {
     return (
@@ -85,6 +92,10 @@ export default class Dashboard extends React.Component {
         </header>
         <div className="mdl-layout__drawer mdl-color--light-green-900 drawer">
           <nav className="mdl-navigation navigation" >
+            <a className="mdl-navigation__link mdl-color-text--white" href="#">
+              <i className="material-icons" role="presentation">school</i>
+              EDUTOPIA
+            </a>
             <a className="mdl-navigation__link" href="/dashboard/myrooms">
               <i className="material-icons" role="presentation">person</i>
               My Rooms
@@ -97,7 +108,7 @@ export default class Dashboard extends React.Component {
               <i className="material-icons" role="presentation">settings</i>
                 Profile
             </a>
-            <a className="mdl-navigation__link" href="">
+            <a onClick={this.logOut} className="mdl-navigation__link" href="">
               <i className="material-icons" role="presentation">exit_to_app</i>
               Log out
             </a>
