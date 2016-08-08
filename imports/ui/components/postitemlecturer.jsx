@@ -37,7 +37,7 @@ export default class PostItemLecturer extends React.Component {
   goToComments(e) {
     console.log(this.props.post);
     e.preventDefault();
-    const route = '/dahsboard/comments/';
+    const route = '/dashboard/comments/';
     FlowRouter.go(route + this.props.post._id);
   }
   upVote() {

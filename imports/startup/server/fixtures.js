@@ -1,25 +1,27 @@
 import { Meteor } from 'meteor/meteor';
 import { Rooms } from '../../api/rooms/rooms.js';
-import { Sessions } from '../../api/sessions/sessions.js';
-import { Posts } from '../../api/posts/posts.js';
-import { Comments } from '../../api/comments/comments.js';
+// import { Sessions } from '../../api/sessions/sessions.js';
+// import { Posts } from '../../api/posts/posts.js';
+// import { Comments } from '../../api/comments/comments.js';
 import { Accounts } from 'meteor/accounts-base';
 
 Meteor.startup(() => {
   const user = {};
-  const room = {};
-  const session = {};
-  const post = {};
+  // const room = {};
+  // const session = {};
+  // const post = {};
   const date = new Date();
   if (Meteor.users.find().count() === 0) {
-    user.id = Accounts.createUser({ username: 'Jon', password: 'tester' });
+    user.id = Accounts.createUser({ username: 'foreleser', password: 'NTNU' });
     Rooms.insert({
-      nickname: 'Checker',
+      nickname: 'Matte intro',
       createdBy: user.id,
       joinedBy: [user.id],
       joinedAmount: 1,
-      createdAt: date.toLocaleDateString() });
-    Rooms.insert({
+      createdAt: date.toLocaleDateString(),
+    });
+
+   /* Rooms.insert({
       nickname: 'Cher1',
       createdBy: user.id,
       joinedBy: [user.id],
@@ -180,6 +182,6 @@ Meteor.startup(() => {
       createdBy: 'hWNDLGg3wSbXFQJc5',
       text: 'da får du null fuckings kroner',
       archived: false,
-    });
+    });*/
   }
 });
