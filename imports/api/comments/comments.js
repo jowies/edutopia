@@ -32,6 +32,7 @@ Comments.schema = new SimpleSchema({
   text: { type: String, max: 240 },
   postId: { type: String, regEx: SimpleSchema.RegEx.Id },
   archived: { type: Boolean },
+  authorType: { type: String },
 });
 
 Comments.attachSchema(Comments.schema);

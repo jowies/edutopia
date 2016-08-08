@@ -67,15 +67,64 @@ export default class PostItemLecturer extends React.Component {
   render() {
     return (
       <li className="mdl-list__item mdl-list__item--three-line listElement">
+        <span className="mdl-list__item-secondary-content">
+          <a className="mdl-list__item-secondary-action" onClick={this.upVote} style={{ opacity: this.getOpacity() }}>
+            <i className="material-icons">keyboard_arrow_up</i>
+            <p>{this.props.post.votes}</p>
+          </a>
+        </span>
+        <span className="mdl-list__item-primary-content">
+          <i className="material-icons mdl-list__item-avatar mdl-cell--hide-tablet mdl-cell--hide-phone">person</i>
+          <span>{this.props.post.authorType}</span>
+          <span className="mdl-list__item-text-body" style={{ wordWrap: 'break-word' }}>
+            {this.props.post.text}
+          </span>
+        </span>
+        
+        <span>
+          <a
+            style={{ float: 'right' }}
+            onClick={this.deletePost}
+            ref="button"
+            className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+          >
+          Delete
+          </a>
+          <a
+            style={{ float: 'right' }}
+            onClick={this.goToComments}
+            ref="button"
+            className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+          >
+            {this.getCommentText()}
+          </a>
+        </span>
+      </li>
+    );
+  }
+}
+/* <button onClick={this.goToComments} ref="button" className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary mdl-color--light-blue-900">
+          {this.state.comments}
+        </button> */
+PostItemLecturer.propTypes = {
+  post: React.PropTypes.object,
+};
+
+/*
+  <li className="mdl-list__item mdl-list__item--three-line listElement">
         <span className="mdl-list__item-secondary-content" style={{ marginLeft: '0px', paddingRight: '20px' }}>
           <div onClick={this.upVote} className="mdl-list__item-secondary-action" style={{ opacity: this.getOpacity() }}>
             <i style={{ fontSize: '32px' }} className="material-icons center">keyboard_arrow_up</i>
           </div>
           <span style={{ fontSize: '16px' }} className="mdl-list__item-secondary-info center">{this.props.post.votes}</span>
         </span>
-        <span className="mdl-list__item-primary-content" style={{ maxWidth: '90%', float: 'right' }}>
-          <i className="material-icons mdl-list__item-avatar mdl-cell--hide-tablet mdl-cell--hide-phone">person</i>
-          <span><h5>{this.props.post.authorType}</h5></span>
+
+        <div className="mdl-list__item-primary-content mdl-cell--hide-tablet mdl-cell--hide-phone flexDisplay flexDirectionColumn" style={{ maxWidth: '90%', float: 'right' }}>
+          <i className="material-icons mdl-list__item-avatar">person</i>
+          <p style={{ fontWeight: 'bold' }}>{this.props.post.authorType}</p>
+        </div>
+
+        <div className="mdl-list__item-primary-content">
           <span style={{ paddingLeft: '10px', wordWrap: 'break-word' }}>
             {this.props.post.text}
           </span>
@@ -98,15 +147,8 @@ export default class PostItemLecturer extends React.Component {
               {this.getCommentText()}
             </a>
           </div>
-        </span>
+        </div>
         
       </li>
-    );
-  }
-}
-/* <button onClick={this.goToComments} ref="button" className="mdl-button mdl-js-button mdl-button--raised mdl-button--primary mdl-color--light-blue-900">
-          {this.state.comments}
-        </button> */
-PostItemLecturer.propTypes = {
-  post: React.PropTypes.object,
-};
+*/
+

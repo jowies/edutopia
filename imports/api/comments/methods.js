@@ -17,12 +17,14 @@ export const insert = new ValidatedMethod({
     text: { type: String },
     postId: { type: String },
     createdBy: { type: String },
+    authorType: { type: String },
   }).validator(),
-  run({ text, postId, createdBy }) {
+  run({ text, postId, createdBy, authorType }) {
     const comment = {
       postId,
       createdAt: new Date(),
-      createdBy,      // votes: 0,
+      createdBy,
+      authorType,      // votes: 0,
       // votedBy: [],
       text,
       archived: false,

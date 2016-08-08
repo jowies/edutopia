@@ -1,6 +1,6 @@
 import React from 'react';
 import { upgrade, downgrade } from '../../helpers/upgrade.jsx';
-import CommentItem from '../../components/commentitem.jsx';
+import LecturerCommentItem from '../../components/lecturercommentitem.jsx';
 import { Meteor } from 'meteor/meteor';
 import { insert } from '../../../../imports/api/comments/methods.js';
 import { FlowRouter } from 'meteor/kadira:flow-router';
@@ -64,7 +64,8 @@ export default class MyPost extends React.Component {
     const text = this.state.comment;
     const postId = this.props.post._id;
     const createdBy = Meteor.userId();
-    insert.call({ text, postId, createdBy }, (err, res) => {
+    const authorType = 'Teacher';
+    insert.call({ text, postId, createdBy, authorType }, (err, res) => {
       console.log(err);
       console.log(res);
       if (err) {
@@ -82,7 +83,7 @@ export default class MyPost extends React.Component {
   }
   renderList() {
     return this.props.comments.map((comment) => (
-      <CommentItem key={comment._id} comment={comment} />
+      <LecturerCommentItem key={comment._id} comment={comment} />
     ));
   }
 
