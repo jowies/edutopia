@@ -70,7 +70,7 @@ export default class PostItem extends React.Component {
         </span>
         <span className="mdl-list__item-primary-content" style={{ maxWidth: '90%', float: 'right' }}>
           <i className="material-icons mdl-list__item-avatar mdl-cell--hide-tablet mdl-cell--hide-phone">person</i>
-          <span style={{ paddingLeft: '10px' }}>
+          <span style={{ paddingLeft: '10px', wordWrap: 'break-word', visibility: 'visible', zIndex: '50', color: 'black' }}>
             {this.props.post.text}
           </span>
           <div style={{ width: '100%' }}>
