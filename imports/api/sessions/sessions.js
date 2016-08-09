@@ -44,7 +44,7 @@ Sessions.publicFields = {
   createdAt: 1,
   createdBy: 1,
   roomId: 1,
-  active: 0,
+  active: 1,
   closedAt: 1,
 };
 

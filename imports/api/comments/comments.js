@@ -45,13 +45,10 @@ Comments.publicFields = {
 };
 
 Comments.helpers({
-  editableBy(userId) {
-    const post = Posts.find({ _id: this.postId });
-    const session = Sessions.find({ _id: post.roomId });
-    if (this.createdBy === userId || userId === session.createdBy) {
+  editableBy(userId, admin) {
+    if (this.createdBy === userId || admin === userId) {
       return true;
     }
-
     return false;
   },
 });

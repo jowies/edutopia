@@ -80,6 +80,7 @@ export const upvote = new ValidatedMethod({
 const POSTS_METHODS = _.pluck([
   insert,
   remove,
+  upvote,
 ], 'name');
 
 if (Meteor.isServer) {

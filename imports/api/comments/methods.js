@@ -6,6 +6,7 @@ import { _ } from 'meteor/underscore';
 
 import { Comments } from './comments.js';
 import { Posts } from '../posts/posts.js';
+import { Sessions } from '../sessions/sessions.js';
 
 const COMMENT_ID_ONLY = new SimpleSchema({
   commentId: { type: String },
@@ -41,14 +42,19 @@ export const remove = new ValidatedMethod({
   validate: COMMENT_ID_ONLY,
   run({ commentId }) {
     const comment = Comments.findOne(commentId);
-    if (!comment.editableBy(this.userId)) {
-      throw new Meteor.Error('comments.remove.accessDenied',
-        'You don\'t have permission to remove this comment.');
+    const post = Posts.findOne({ _id: comment.postId });
+    const session = Sessions.findOne({ _id: post.sessionId });
+    if (session) {
+      if (!comment.editableBy(this.userId, session.createdBy)) {
+        throw new Meteor.Error('comments.remove.accessDenied',
+          'You don\'t have permission to remove this comment.');
+      }
+
+      Posts.update(comment.postId, {
+        $inc: { commentAmount: -1 },
+      });
+      Comments.remove(commentId);
     }
-    Posts.update(comment.postId, {
-      $inc: { commentAmount: -1 },
-    });
-    Comments.remove(commentId);
   },
 });
 

@@ -67,9 +67,9 @@ export default class PostItemLecturer extends React.Component {
   render() {
     return (
       <li className="mdl-list__item mdl-list__item--three-line listElement">
-        <span className="mdl-list__item-secondary-content">
-          <a className="mdl-list__item-secondary-action" onClick={this.upVote} style={{ opacity: this.getOpacity() }}>
-            <i className="material-icons">keyboard_arrow_up</i>
+        <span className="mdl-list__item-secondary-content mdl-color-text--grey-900">
+          <a className="mdl-list__item-secondary-action mdl-color-text--grey-900" onClick={this.upVote} style={{ opacity: this.getOpacity() }}>
+            <i className="material-icons mdl-color-text--grey-900">keyboard_arrow_up</i>
             <p>{this.props.post.votes}</p>
           </a>
         </span>

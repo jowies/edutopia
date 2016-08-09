@@ -49,8 +49,6 @@ export default class PostItem extends React.Component {
     });
   }
 
-  
-
   goToComments(e) {
     console.log(this.props.post);
     e.preventDefault();
@@ -61,30 +59,29 @@ export default class PostItem extends React.Component {
   render() {
     return (
       <li className="mdl-list__item mdl-list__item--three-line listElement">
-        <span className="mdl-list__item-secondary-content" style={{ marginLeft: '0px', paddingRight: '20px' }}>
-          <div onClick={this.upVote} className="mdl-list__item-secondary-action" style={{ opacity: this.getOpacity() }}>
-            <i style={{ fontSize: '32px' }} className="material-icons center">keyboard_arrow_up</i>
-          </div>
-          <span style={{ fontSize: '16px' }} className="mdl-list__item-secondary-info center">{this.props.post.votes}</span>
+        <span className="mdl-list__item-secondary-content mdl-color-text--grey-900">
+          <a className="mdl-list__item-secondary-action mdl-color-text--grey-900" onClick={this.upVote} style={{ opacity: this.getOpacity() }}>
+            <i className="material-icons mdl-color-text--grey-900">keyboard_arrow_up</i>
+            <p>{this.props.post.votes}</p>
+          </a>
         </span>
-        <span className="mdl-list__item-primary-content" style={{ maxWidth: '90%', float: 'right' }}>
+        <span className="mdl-list__item-primary-content">
           <i className="material-icons mdl-list__item-avatar mdl-cell--hide-tablet mdl-cell--hide-phone">person</i>
-          <span><h5>{this.props.post.authorType}</h5></span>
-          <span style={{ paddingLeft: '10px', wordWrap: 'break-word' }}>
+          <span>{this.props.post.authorType}</span>
+          <span className="mdl-list__item-text-body" style={{ wordWrap: 'break-word' }}>
             {this.props.post.text}
           </span>
-          <div style={{ width: '100%' }}>
-            <a
-              style={{ float: 'right' }}
-              onClick={this.goToComments}
-              ref="button"
-              className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
-            >
-              {this.getCommentText()}
-            </a>
-          </div>
         </span>
-        
+        <span>
+          <a
+            style={{ float: 'right' }}
+            onClick={this.goToComments}
+            ref="button"
+            className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+          >
+            {this.getCommentText()}
+          </a>
+        </span>
       </li>
     );
   }
