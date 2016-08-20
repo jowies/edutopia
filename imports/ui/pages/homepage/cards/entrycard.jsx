@@ -1,8 +1,13 @@
 import React from 'react';
 import { upgrade, downgrade } from '../../../helpers/upgrade.jsx';
-
+import { FlowRouter } from 'meteor/kadira:flow-router';
 
 export default class EntryCard extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.goToSignup = this.goToSignup.bind(this);
+  }
 
   componentDidMount() {
     upgrade(/* this.refs.signup, */this.refs.login);
@@ -14,6 +19,11 @@ export default class EntryCard extends React.Component {
 
   componentWillUnmount() {
     downgrade(/* this.refs.signup, */this.refs.login);
+  }
+
+  goToSignup(e) {
+    e.preventDefault();
+    FlowRouter.go('/signup');
   }
 
   render() {
@@ -71,10 +81,10 @@ export default class EntryCard extends React.Component {
               </button>
             </div>
           </div>
-          {/* <div className="mdl-card__actions">
+          <div className="mdl-card__actions">
             <div className="center">
               <button
-                onClick={this.props.showSignUpCard}
+                onClick={this.goToSignup}
                 className="mdl-button
                   mdl-button--primary
                   mdl-button--raised
@@ -86,7 +96,7 @@ export default class EntryCard extends React.Component {
                Sign up
               </button>
             </div>
-          </div>*/}
+          </div>
         </div>
       </div>
     );

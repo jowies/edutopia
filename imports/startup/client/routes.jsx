@@ -15,6 +15,7 @@ import AboutUs from '../../ui/pages/homepage/aboutus.jsx';
 import Contact from '../../ui/pages/homepage/contact.jsx';
 import SignUp from '../../ui/pages/signup.jsx';
 import Settings from '../../ui/pages/dashboard/settings.jsx';
+import Verified from '../../ui/pages/verified.jsx';
 
 
 FlowRouter.route('/', {
@@ -91,5 +92,11 @@ FlowRouter.route('/contact', {
 FlowRouter.route('/signup', {
   action() {
     mount(SignUp);
+  },
+});
+
+FlowRouter.route('/verified', {
+  action() {
+    mount(Verified);
   },
 });

@@ -68,7 +68,7 @@ export default class Dashboard extends React.Component {
       );
   }
   logOut() {
-    Meteor.logout(callback => {
+    Meteor.logout((callback) => {
       console.log(callback);
     });
     FlowRouter.go('/');
@@ -92,7 +92,7 @@ export default class Dashboard extends React.Component {
         </header>
         <div className="mdl-layout__drawer mdl-color--light-green-900 drawer">
           <nav className="mdl-navigation navigation" >
-            <a className="mdl-navigation__link mdl-color-text--white" href="#">
+            <a className="mdl-navigation__link mdl-color-text--white" href="/dashboard">
               <i className="material-icons" role="presentation">school</i>
               EDUTOPIA
             </a>

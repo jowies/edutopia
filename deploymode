@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# my first script
+
+command=$1
+
+if [ -f mup.json ]; then
+    echo "File found!"
+fi
+
+echo "Hell";

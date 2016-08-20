@@ -72,7 +72,7 @@ export default class LogInCard extends React.Component {
                 value={this.state.username}
                 onChange={this.handleChangeUsername}
                 id={'user'}
-                label={'Username'}
+                label={'Username or email'}
                 type={'text'}
                 errormessage={''}
                 error={false}

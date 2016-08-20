@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
@@ -27,10 +28,22 @@ export const isUserEmail = new ValidatedMethod({
   },
 });
 
+export const sendVerificationLink = new ValidatedMethod({
+  name: 'verify.email',
+  validate: null,
+  run() {
+    const user = Meteor.userId;
+    if (user && Meteor.isServer) {
+      Accounts.sendVerificationEmail(user);
+    }
+  },
+});
+
 
 const ACCOUNTS_METHODS = _.pluck([
   isUserUsername,
   isUserEmail,
+  sendVerificationLink,
 ], 'name');
 
 if (Meteor.isServer) {
