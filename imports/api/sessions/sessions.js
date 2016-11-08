@@ -6,10 +6,8 @@ class SessionsCollection extends Mongo.Collection {
   insert(session, callback) {
     const userSession = session;
     userSession.createdAt = userSession.createdAt || new Date();
-    console.log('running');
-    const generateCode = Math.floor((Math.random() * 9000 + 1000)).toString();
-    console.log(generateCode);
-    userSession.code = generateCode;
+    userSession.joinedBy = [];
+    userSession.joinedAmount = 0;
     return super.insert(userSession, callback);
   }
   remove(selector, callback) {
@@ -30,11 +28,14 @@ Sessions.deny({
 Sessions.schema = new SimpleSchema({
   createdAt: { type: Date, denyUpdate: true },
   createdBy: { type: String, regEx: SimpleSchema.RegEx.Id },
-  roomId: { type: String, regEx: SimpleSchema.RegEx.Id },
+  roomId: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
   active: { type: Boolean },
   closedAt: { type: Date, optional: true },
   code: { type: String, optional: true },
   sessionName: { type: String },
+  joinedAmount: { type: Number },
+  joinedBy: { type: [String] },
+  single: { type: Boolean },
 
 });
 
@@ -46,6 +47,7 @@ Sessions.publicFields = {
   roomId: 1,
   active: 1,
   closedAt: 1,
+  single: 1,
 };
 
 Sessions.helpers({

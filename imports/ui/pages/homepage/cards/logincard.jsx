@@ -10,6 +10,7 @@ export default class LogInCard extends React.Component {
     this.state = {
       username: '',
       password: '',
+      error: false,
     };
     this.handleChangeUsername = this.handleChangeUsername.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this);
@@ -28,24 +29,28 @@ export default class LogInCard extends React.Component {
     downgrade(this.refs.goback, this.refs.login);
   }
 
+
   handleChangeUsername(e) {
     e.preventDefault();
-    this.setState({ username: e.target.value });
+    this.setState({ username: e.target.value, error: false });
   }
 
   handleChangePassword(e) {
     e.preventDefault();
-    this.setState({ password: e.target.value });
+    this.setState({ password: e.target.value, error: false });
   }
 
   logIn(e) {
     e.preventDefault();
     const username = this.state.username;
     const password = this.state.password;
-    Meteor.loginWithPassword(username, password);
-    if (Meteor.userId()) {
-      FlowRouter.go('/dashboard/myrooms');
-    }
+    Meteor.loginWithPassword(username, password, (err) => {
+      if (err) {
+        this.setState({ error: true });
+      } else {
+        FlowRouter.go('/dashboard/myrooms');
+      }
+    });
   }
 
   render() {
@@ -87,8 +92,12 @@ export default class LogInCard extends React.Component {
                 error={false}
               />
             </form>
+            {this.state.error ? <p className="mdl-color-text--red-500">
+              Wrong username/email or password
+            </p> : <span></span>}
           </div>
           <div className="mdl-card__actions">
+            <p><a href="/retrieval">Forgot your password?</a></p>
             <button
               onClick={this.props.goBack}
               ref="goback"

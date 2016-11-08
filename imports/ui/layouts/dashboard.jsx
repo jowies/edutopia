@@ -42,7 +42,7 @@ export default class Dashboard extends React.Component {
       });
     }
     if (this.props.path === 'nickname') {
-      const string = 'My Rooms > ';
+      const string = 'My course > ';
       return string + this.state.nickname;
     }
     return this.props.path;
@@ -59,13 +59,16 @@ export default class Dashboard extends React.Component {
         }
       });
     }
-    return (
-      <div style={{ float: 'right' }}>
-        <span className="mdl-layout-title">
-          {this.state.code}
-        </span>
-      </div>
+    if (!!code) {
+      return (
+        <div style={{ float: 'right' }}>
+          <span className="mdl-layout-title">
+            {this.state.code}
+          </span>
+        </div>
       );
+    }
+    return '';
   }
   logOut() {
     Meteor.logout((callback) => {
@@ -98,11 +101,15 @@ export default class Dashboard extends React.Component {
             </a>
             <a className="mdl-navigation__link" href="/dashboard/myrooms">
               <i className="material-icons" role="presentation">person</i>
-              My Rooms
+              My Courses
             </a>
             <a className="mdl-navigation__link" href="/dashboard/joinedrooms" >
               <i className="material-icons" role="presentation">group</i>
-              Joined Rooms
+              Joined Courses
+            </a>
+            <a className="mdl-navigation__link" href="/dashboard/singlesession">
+              <i className="material-icons" role="presentation">settings</i>
+                Single session
             </a>
             <a className="mdl-navigation__link" href="/dashboard/settings">
               <i className="material-icons" role="presentation">settings</i>

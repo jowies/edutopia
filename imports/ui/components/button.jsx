@@ -3,9 +3,7 @@ import { upgrade, downgrade } from '../helpers/upgrade.jsx';
 
 
 export default class Button extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+
   componentDidMount() {
     upgrade(this.refs.button);
   }
@@ -21,15 +19,12 @@ export default class Button extends React.Component {
   render() {
     return (
       <button
-        className="mdl-button
-          mdl-button--primary
-          mdl-button--raised
-          mdl-js-button
-          mdl-js-ripple-effect
-          mdl-color--light-blue-900"
+        className={this.props.className}
         ref="button"
+        onClick={this.props.onClick}
+        style={this.props.style}
       >
-        {this.props.label}
+        {this.props.children}
       </button>
     );
   }
@@ -39,10 +34,7 @@ Button.propTypes = {
   children: React.PropTypes.node,
   onClick: React.PropTypes.func,
   className: React.PropTypes.string,
-  ripple: React.PropTypes.bool,
   label: React.PropTypes.string,
+  style: React.PropTypes.object,
 };
 
-Button.defaultProps = {
-  ripple: true,
-};

@@ -1,5 +1,5 @@
 import { Accounts } from 'meteor/accounts-base';
-//import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+// import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 Accounts.onCreateUser((options, user) => {
   // const student = options.student;
@@ -7,6 +7,6 @@ Accounts.onCreateUser((options, user) => {
     student: { type: Boolean },
   }).validate({ student }); */
   const newUser = user;
-  // newUser.student = options.student;
+  newUser.subsribed = options.subscribed;
   return newUser;
 });

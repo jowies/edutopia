@@ -1,63 +1,62 @@
 import React from 'react';
+import JoinedRoomItem from '../../components/joinedroomitem.jsx';
+import JoinRoom from '../../components/joinroom.jsx';
 
 export default class JoinedRooms extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      extend: false,
+    };
     this.renderList = this.renderList.bind(this);
+    this.expandhandle = this.expandhandle.bind(this);
+    this.done = this.done.bind(this);
   }
 
-  handleClick(e) {
-    // MÅ LEGGES INN ROUTING OG ENDRE på path
+  getSign() {
+    if (this.state.expand) {
+      return '-';
+    }
+    return '+';
+  }
+
+  done() {
+    this.setState({ expand: false });
+  }
+
+  expandhandle(e) {
     e.preventDefault();
-    const route = '/dashboard/myrooms/';
-    FlowRouter.go(route + this.room._id);
+    this.setState({ expand: !this.state.expand });
+  }
+
+  expand() {
+    if (this.state.expand && !this.props.loading) {
+      return <JoinRoom done={this.done} />;
+    }
+    return null;
   }
 
   renderList() {
     return this.props.rooms.map((room) => (
-      <div>
-        <li
-          id={room._id}
-          onClick={this.handleClick}
-          className="mdl-list__item mdl-list__item--three-line listElement"
-        >
-          <span className="mdl-list__item-primary-content">
-            <i className="material-icons mdl-list__item-avatar">person</i>
-            <span>
-              <p key={room._id}>{room.nickname}
-                <span style={{ float: 'right' }} > &nbsp; created at: &nbsp;
-                  <span>{room.createdAt.toDateString()}</span>
-                </span>
-              </p>
-            </span>
-            <span className="mdl-list__item-text-body">
-              Short summary of what the Room/(course) is about.
-            </span>
-          </span>
-          <span className="mdl-list__item-secondary-content">
-            <a className="mdl-list__item-secondary-action" href="#">
-              <i className="material-icons">star</i>
-            </a>
-          </span>
-        </li>
-      </div>
+      <JoinedRoomItem room={room} key={room._id} />
     ));
   }
 
   render() {
     return (
       <div>
+        <div className="center">
+          <button ref="create" onClick={this.expandhandle} className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+            {this.getSign()} Join new course
+          </button>
+          {this.expand()}
+        </div>
       {this.props.loading ?
         <div
           className="mdl-spinner
           mdl-spinner--single-color mdl-js-spinner is-active"
         >
         </div> : <ul className="mdl-list list"> {this.renderList()} </ul>}
-        <div className="center">
-          <button onClick={this.createRoom} className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">
-            <i className="material-icons">add</i>
-          </button>
-        </div>
       </div>
     );
   }

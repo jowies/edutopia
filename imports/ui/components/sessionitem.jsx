@@ -13,6 +13,10 @@ export default class SessionItem extends React.Component {
     FlowRouter.go(route + this.props.session._id);
   }
 
+  getText() {
+    return this.props.session.active ? <h4 className="mdl-color-text--green-900">Active</h4> : <h4 className="mdl-color-text--red-900" >Archived</h4>;
+  }
+
   render() {
     return (
       <div>
@@ -31,8 +35,7 @@ export default class SessionItem extends React.Component {
               </p>
             </span>
             <span className="mdl-list__item-text-body">
-              Short summary of what the session is about.
-              E.g. what chapter, or a short summary of the lecture.
+              {this.getText()}
             </span>
           </span>
           <span className="mdl-list__item-secondary-content">

@@ -4,9 +4,11 @@ import { Rooms } from '../../api/rooms/rooms.js';
 // import { Posts } from '../../api/posts/posts.js';
 // import { Comments } from '../../api/comments/comments.js';
 import { Accounts } from 'meteor/accounts-base';
+import { Session } from 'meteor/session';
+import { Random } from 'meteor/random';
 
 Meteor.startup(() => {
-  const user = {};
+  /* const user = {};
   // const room = {};
   // const session = {};
   // const post = {};
@@ -183,5 +185,4 @@ Meteor.startup(() => {
       text: 'da får du null fuckings kroner',
       archived: false,
     });*/
-  }
 });

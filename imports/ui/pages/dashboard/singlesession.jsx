@@ -1,10 +1,10 @@
 import React from 'react';
 import { upgrade, downgrade } from '../../helpers/upgrade.jsx';
-import RoomItem from '../../components/roomitem.jsx';
-import { Meteor } from 'meteor/meteor';
-import CreateRoom from '../../components/create.jsx';
+import SessionItem from '../../components/sessionitem.jsx';
+import CreateSingle from '../../components/createsingle.jsx';
+import JoinSingle from '../../components/joinsingle.jsx';
 
-export default class MyRooms extends React.Component {
+export default class SingleSession extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,11 +16,11 @@ export default class MyRooms extends React.Component {
   }
 
   componentDidMount() {
-    upgrade(this.refs.create);
+
   }
 
   componentDidUpdate() {
-    upgrade(this.refs.create);
+
   }
 
   componentWillUnmount() {
@@ -28,10 +28,11 @@ export default class MyRooms extends React.Component {
     // the way it is now, can return in error!
     // e.g. if it upgrades because of load, then it should downgrade later
     // on, but this wont happen because it isn't loading anymore.
-
-    downgrade(this.refs.create);
+    // Løsbart enkelt ved å lage en loading component
+    if (this.props.loading) {
+      downgrade(this.refs.spinner);
+    }
   }
-
 
   getSign() {
     if (this.state.expand) {
@@ -51,39 +52,39 @@ export default class MyRooms extends React.Component {
 
   expand() {
     if (this.state.expand && !this.props.loading) {
-      return <CreateRoom done={this.done} />;
+      return <CreateSession done={this.done} room={this.props.room} />;
     }
     return null;
   }
 
   renderList() {
-    return this.props.rooms.map((room) => (
-      <RoomItem room={room} key={room._id} />
+    return this.props.sessions.map((session) => (
+      <SessionItem key={session._id} session={session} />
     ));
   }
 
   render() {
     return (
       <div>
-        <div className="center">
-          <button ref="create" onClick={this.expandhandle} className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
-            {this.getSign()} Create new course
-          </button>
-          {this.expand()}
+        <div className="mdl-grid">
+          <div className="mdl-cell mdl-cell--6-col">
+            <CreateSingle />
+          </div>
+          <div className="mdl-cell mdl-cell--6-col">
+            <JoinSingle />
+          </div>
         </div>
-      {this.props.loading ?
-        <div
-          className="mdl-spinner
-          mdl-spinner--single-color mdl-js-spinner is-active"
-          ref="spinner"
-        >
-        </div> : <ul className="mdl-list list"> {this.renderList()} </ul>}
+        <h5>Your single sessions:</h5>
+        {this.props.loading ? <p>Loading sessions</p> : (this.props.sessions.length > 0 ? <ul className="mdl-list list"> {this.renderList()} </ul> : <p>You have not created any single sessions</p>)}
       </div>
     );
   }
 }
 
-MyRooms.propTypes = {
+SingleSession.propTypes = {
   loading: React.PropTypes.bool,
-  rooms: React.PropTypes.array,
+  room: React.PropTypes.object,
+  sessions: React.PropTypes.array,
+  roomId: React.PropTypes.string,
 };
+

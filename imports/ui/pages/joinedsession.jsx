@@ -58,7 +58,7 @@ export default class MySession extends React.Component {
     e.preventDefault();
     const text = this.state.question;
     const sessionId = this.props.session._id;
-    const createdBy = Session.get('clientId');
+    const createdBy = Meteor.userId() || Session.get('client');
     const authorType = 'Student';
     insert.call({ text, sessionId, createdBy, authorType }, (err, res) => {
       console.log(res);
@@ -69,10 +69,24 @@ export default class MySession extends React.Component {
       }
     });
   }
+
+  getBackPath() {
+    if (!Meteor.userId()) {
+      return '/';
+    }
+    return '/dashboard/singlesession';
+  }
   renderList() {
     return this.props.posts.map((post) => (
       <PostItem post={post} key={post._id} />
     ));
+  }
+
+  getA() {
+    return (
+      <a style={{ float: 'right' }} href={this.getBackPath()} className="mdl-navigation__link mdl-color-text--white">
+        Go Back
+      </a>);
   }
 
   render() {
@@ -89,9 +103,7 @@ export default class MySession extends React.Component {
               Edutopia
             </span>
             <div className="mdl-layout-spacer"></div>
-              <a style={{ float: 'right' }} href="/" className="mdl-navigation__link mdl-color-text--white">
-                log out
-              </a>
+              {this.props.session ? this.getA() : <p>Loading</p>}        
           </div>
         </header>
         <div className="mdl-color--grey-100 mdl-color-text--grey-600">

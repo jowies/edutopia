@@ -1,13 +1,17 @@
 import React from 'react';
 import { upgrade, downgrade } from '../../helpers/upgrade.jsx';
 import SessionItem from '../../components/sessionitem.jsx';
-import { insert } from '../../../api/sessions/methods.js';
+import CreateSession from '../../components/createsession.jsx';
 
 export default class MyRoom extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      expand: false,
+    };
     this.renderList = this.renderList.bind(this);
-    this.createSession = this.createSession.bind(this);
+    this.expandhandle = this.expandhandle.bind(this);
+    this.done = this.done.bind(this);
   }
 
   componentDidMount() {
@@ -32,15 +36,28 @@ export default class MyRoom extends React.Component {
       downgrade(this.refs.spinner);
     }
   }
-  createSession(e) {
+
+  getSign() {
+    if (this.state.expand) {
+      return '-';
+    }
+    return '+';
+  }
+
+  done() {
+    this.setState({ expand: false });
+  }
+
+  expandhandle(e) {
     e.preventDefault();
-    const roomId = this.props.room._id;
-    console.log(roomId);
-    insert.call({ roomId }, (err) => {
-      if (err) {
-        console.log(err);
-      }
-    });
+    this.setState({ expand: !this.state.expand });
+  }
+
+  expand() {
+    if (this.state.expand && !this.props.loading) {
+      return <CreateSession done={this.done} room={this.props.room} />;
+    }
+    return null;
   }
 
   renderList() {
@@ -52,13 +69,14 @@ export default class MyRoom extends React.Component {
   render() {
     return (
       <div>
+        <div className="center">
+          <button ref="create" onClick={this.expandhandle} className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+            {this.getSign()} Start new session
+          </button>
+          {this.expand()}
+        </div>
         {this.props.room ? null : <p>Loading</p>}
         {this.props.loading ? <p>Loading sessions</p> : <ul className="mdl-list list"> {this.renderList()} </ul>}
-        <div className="center">
-          <button onClick={this.createSession} className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">
-            <i className="material-icons">add</i>
-          </button>
-        </div>
       </div>
     );
   }

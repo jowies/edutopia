@@ -5,6 +5,7 @@ import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 import { _ } from 'meteor/underscore';
 
 import { Rooms } from './rooms.js';
+import { Sessions } from '../sessions/sessions.js';
 
 const ROOM_ID_ONLY = new SimpleSchema({
   roomId: { type: String },
@@ -14,13 +15,20 @@ export const insert = new ValidatedMethod({
   name: 'rooms.insert',
   validate: new SimpleSchema({
     nickname: { type: String },
+    roomcode: { type: String },
   }).validator(),
-  run({ nickname }) {
+  run({ nickname, roomcode }) {
+    const already = Rooms.findOne({ nickname });
+    if (already) {
+      return false;
+    }
     const room = {
       createdAt: new Date(),
       createdBy: this.userId,
       joinedBy: [],
       joinedAmount: 0,
+      sessionAmount: 0,
+      roomcode,
       nickname,
     };
     return Rooms.insert(room);
@@ -55,10 +63,44 @@ export const nickname = new ValidatedMethod({
   },
 });
 
+export const activesession = new ValidatedMethod({
+  name: 'room.activesession',
+  validate: new SimpleSchema({
+    roomId: { type: String },
+  }).validator(),
+  run({ roomId }) {
+    const room = Rooms.findOne(roomId);
+    const session = Sessions.findOne({ roomId: room._id, active: true });
+    if (session) {
+      return session;
+    }
+    return false;
+  },
+});
+
+export const join = new ValidatedMethod({
+  name: 'rooms.join',
+  validate: new SimpleSchema({
+    roomcode: { type: String },
+  }).validator(),
+  run({ roomcode }) {
+    const room = Rooms.findOne({ roomcode });
+    if (room && !_.include(room.joinedBy, this.userId)) {
+      Rooms.update(room, {
+        $addToSet: { joinedBy: this.userId },
+        $inc: { joinedAmount: 1 },
+      });
+    }
+    return !!room;
+  },
+});
+
 const ROOMS_METHODS = _.pluck([
   insert,
   remove,
   nickname,
+  join,
+  activesession,
 ], 'name');
 
 if (Meteor.isServer) {

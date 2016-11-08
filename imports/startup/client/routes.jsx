@@ -11,6 +11,7 @@ import MySessionContainer from '../../ui/containers/mysessioncontainer.jsx';
 import CommentsContainer from '../../ui/containers/commentscontainer.jsx';
 import JoinedSessionContainer from '../../ui/containers/joinedsessioncontainer.jsx';
 import LecturerCommentsContainer from '../../ui/containers/lecturercommentscontainer.jsx';
+import SingleSessionContainer from '../../ui/containers/singlesessioncontainer.jsx';
 import AboutUs from '../../ui/pages/homepage/aboutus.jsx';
 import Contact from '../../ui/pages/homepage/contact.jsx';
 import SignUp from '../../ui/pages/signup.jsx';
@@ -32,7 +33,7 @@ FlowRouter.route('/dashboard', {
 
 FlowRouter.route('/dashboard/myrooms', {
   action() {
-    mount(Dashboard, { content: <MyRoomsListContainer />, path: 'My Rooms' });
+    mount(Dashboard, { content: <MyRoomsListContainer />, path: 'My Courses' });
   },
 });
 FlowRouter.route('/dashboard/settings', {
@@ -73,7 +74,13 @@ FlowRouter.route('/comments/:postId', {
 
 FlowRouter.route('/dashboard/joinedrooms', {
   action() {
-    mount(Dashboard, { content: <JoinedRoomsListContainer />, path: 'Joined rooms' });
+    mount(Dashboard, { content: <JoinedRoomsListContainer />, path: 'Joined courses' });
+  },
+});
+
+FlowRouter.route('/dashboard/singlesession', {
+  action() {
+    mount(Dashboard, { content: <SingleSessionContainer />, path: 'Single session' });
   },
 });
 

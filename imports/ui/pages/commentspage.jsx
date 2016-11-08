@@ -1,4 +1,5 @@
 import React from 'react';
+import { Meteor } from 'meteor/meteor';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { upgrade, downgrade } from '../../ui/helpers/upgrade.jsx';
 import CommentItem from '../../ui/components/commentitem.jsx';
@@ -65,7 +66,7 @@ export default class CommentsPage extends React.Component {
     e.preventDefault();
     const text = this.state.comment;
     const postId = this.props.post._id;
-    const createdBy = Session.get('clientId');
+    const createdBy = Meteor.userId() || Session.get('client');
     const authorType = 'Student';
     insert.call({ text, postId, createdBy, authorType }, (err, res) => {
       console.log(err);
@@ -111,7 +112,6 @@ export default class CommentsPage extends React.Component {
             <div className="mdl-card__title">
               <h2 style={{ paddingLeft: '36px' }} className="mdl-card__title-text">{this.props.post.text}</h2>
             </div>
-           
             <form onSubmit={this.postComment} className="flexDisplay flexDirectionRow" style={{ paddingTop: '10px' }} action="#">
               <div style={{ paddingRight: '10px', paddingLeft: '10px' }} ref="textfield1" className="mdl-textfield mdl-js-textfield flexDisplay flex9">
                 <input value={this.state.comment} onChange={this.handleChange} className="mdl-textfield__input" type="text" id="sample3" placeholder="Enter a Comment..." />
@@ -123,7 +123,7 @@ export default class CommentsPage extends React.Component {
               </div>
             </form>
            {this.props.loading ? <p>Loading Comments</p> : <ul className="mdl-list list"> {this.renderList()} </ul>}
-            <div className="mdl-card__menu__left">
+            <div PclassName="mdl-card__menu__left">
               <button onClick={this.goBack} ref="button2" className="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
                 <i className="material-icons">arrow_back</i>
               </button>

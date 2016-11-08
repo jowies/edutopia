@@ -144,7 +144,7 @@ export default class SignUp extends React.Component {
     password = this.state.passwordMatches, checked = this.state.checked) {
     let ready = !(email ||
       username ||
-      !password || !checked);
+      !password || !true);
     if (this.state.email.length < 1 || this.state.username.length < 1) {
       ready = false;
     }
@@ -158,11 +158,12 @@ export default class SignUp extends React.Component {
       username: this.state.username,
       email: this.state.email,
       password: this.state.password,
+      subscribed: this.state.checked,
     }, (err, callback) => {
       if (err) {
         console.log(err);
       } else {
-        FlowRouter.go('/dashboard');
+        FlowRouter.go('/dashboard/myrooms');
       }
     });
   }
@@ -264,16 +265,13 @@ export default class SignUp extends React.Component {
                   checked={this.state.checked}
                 />
                 <span className="mdl-checkbox__label" style={{ float: 'left', paddingLeft: '3px' }}>
-                  <p>I agree to the &nbsp;
-                    <span>
-                      <a href="#">Terms and Conditions</a>
-                    </span>
+                  <p style={{ marginBottom: 20 }}>I agree to edutopia sending an occational email requesting feedback &nbsp;
                   </p>
                 </span>
               </label>
             </div>
           </form>
-          <div className="mdl-card__actions">
+          <div style={{ marginTop: 20 }} className="mdl-card__actions">
             <button
               onClick={this.goBack}
               ref="back"

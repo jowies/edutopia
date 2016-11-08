@@ -12,7 +12,7 @@ const MyRoomsListContainer = createContainer(() => {
   return {
     loading,
     connected: Meteor.status().connected,
-    rooms: Rooms.find(finder).fetch(),
+    rooms: Rooms.find(finder, { sort: { createdAt: -1 } }).fetch(),
     noRooms,
   };
 }, MyRooms);

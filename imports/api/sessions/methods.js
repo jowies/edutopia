@@ -15,21 +15,39 @@ const ROOM_ID_ONLY = new SimpleSchema({
 export const insert = new ValidatedMethod({
   name: 'sessions.insert',
   validate: null,
-  run({ roomId }) {
-    console.log(roomId);
-    const room = Rooms.findOne(roomId);
-    Rooms.update(roomId, {
-      $inc: { sessionAmount: 1 },
-    });
-    const def = 'Session ';
-    const sessionName = def + (room.sessionAmount + 1).toString();
-    const session = {
-      createdAt: new Date(),
-      createdBy: this.userId,
-      roomId,
-      active: true,
-      sessionName,
-    };
+  run({ single, roomId, sessionNameUser }) {
+    let session;
+    if (single) {
+      const sessionName = sessionNameUser || 'Session';
+      const generateCode = Math.floor((Math.random() * 9000 + 1000)).toString();
+      const code = generateCode;
+      session = {
+        createdAt: new Date(),
+        createdBy: this.userId,
+        code,
+        single: true,
+        active: true,
+        sessionName,
+      };
+    } else {
+      const room = Rooms.findOne(roomId);
+      Rooms.update(roomId, {
+        $inc: { sessionAmount: 1 },
+      });
+      const def = 'Session ';
+      const sessionName = sessionNameUser || (def + (room.sessionAmount + 1).toString());
+      session = {
+        createdAt: new Date(),
+        createdBy: this.userId,
+        roomId,
+        single: false,
+        active: true,
+        sessionName,
+      };
+    }
+    if (!single) {
+      Sessions.update({ roomId }, { $set: { active: false } }, { multi: true });
+    }
     return Sessions.insert(session);
   },
 });
@@ -66,7 +84,7 @@ export const code = new ValidatedMethod({
   },
 });
 
-export const joinSession = new ValidatedMethod({
+/* export const joinSession = new ValidatedMethod({
   name: 'sessions.joinByCode',
   validate: new SimpleSchema({
     code: { type: String },
@@ -83,7 +101,7 @@ export const joinSession = new ValidatedMethod({
       if (!_.include(room.joinedBy, userId)) {
         Rooms.update(session.roomId, {
           $addToSet: { joinedBy: userId },
-          $inc: { joined: 1 },
+          $inc: { joinedAmount: 1 },
         });
       }
       console.log(session._id);
@@ -91,13 +109,69 @@ export const joinSession = new ValidatedMethod({
     }
     return false;
   },
+}); */
+
+export const addToSession = new ValidatedMethod({
+  name: 'sessions.addTo',
+  validate: new SimpleSchema({
+    sessionId: { type: String },
+  }).validator(),
+  run({ sessionId }) {
+    if (Meteor.isServer) {
+      const user = this.userId;
+      const _id = sessionId;
+      const session = Sessions.findOne({ _id: sessionId });
+      if (session && !_.include(session.joinedBy, user)) {
+        Sessions.update({ _id }, {
+          $addToSet: { joinedBy: user },
+          $inc: { joinedAmount: 1 },
+        });
+      }
+    }
+  },
+});
+
+export const join = new ValidatedMethod({
+  name: 'session.join',
+  validate: new SimpleSchema({
+    sessionCode: { type: String },
+    user: { type: String },
+  }).validator(),
+  run({ sessionCode, user }) {
+    const session = Sessions.findOne({ code: sessionCode });
+    if (session && !_.include(session.joinedBy, this.userId || user)) {
+      Sessions.update(session, {
+        $addToSet: { joinedBy: user },
+        $inc: { joinedAmount: 1 },
+      });
+    }
+    return { session }
+    ;
+  },
+});
+
+export const end = new ValidatedMethod({
+  name: 'sessions.end',
+  validate: new SimpleSchema({
+    sessionId: { type: String },
+  }).validator(),
+  run({ sessionId }) {
+    if (Meteor.isServer) {
+      const user = this.userId;
+      const session = Sessions.findOne({ _id: sessionId });
+      if (session.createdBy === user) {
+        Sessions.update({ _id: sessionId }, { $set: { active: false } });
+      }
+    }
+  },
 });
 
 const ROOMS_METHODS = _.pluck([
   insert,
   remove,
-  joinSession,
   code,
+  addToSession,
+  end,
 ], 'name');
 
 if (Meteor.isServer) {

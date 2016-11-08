@@ -1,6 +1,8 @@
 import React from 'react';
 import { remove } from '../../../imports/api/comments/methods.js';
 
+
+
 export default class LecturerCommentItem extends React.Component {
   constructor(props) {
     super(props);
@@ -57,3 +59,5 @@ LecturerCommentItem.propTypes = {
         </div>
       </li>
 */
+
+

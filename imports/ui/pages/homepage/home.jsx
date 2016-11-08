@@ -1,8 +1,10 @@
 import React from 'react';
+import { Meteor } from 'meteor/meteor';
 import EnterLectureCard from '../homepage/cards/enterlecturecard.jsx';
 import EntryCard from '../homepage/cards/entrycard.jsx';
 import SignUpCard from '../homepage/cards/signupcard.jsx';
 import LogInCard from '../homepage/cards/logincard.jsx';
+import QuickGo from './cards/quickgo.jsx';
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -15,6 +17,9 @@ export default class Home extends React.Component {
     this.showEnterLectureCard = this.showEnterLectureCard.bind(this);
   }
   getCardContent() {
+    if (Meteor.userId()) {
+      return <QuickGo goBack={this.showEntryCard} />;
+    }
     if (this.state.activeCard === 'entrycard') {
       return (
         <EntryCard
@@ -31,6 +36,11 @@ export default class Home extends React.Component {
     }
     return <div>404 - Page not found - go back</div>;
   }
+
+  getQuickGo() {
+    return <QuickGo />;
+  }
+
   showEnterLectureCard() {
     this.setState({
       activeCard: 'enterlecturecard',
@@ -52,15 +62,11 @@ export default class Home extends React.Component {
     });
   }
 
-  signUp() {
-    FlowRouter.go('/signup');
-  }
-
   render() {
     return (
       <div className="mdl-grid">
         <div className="mdl-cell mdl-cell--12-col">
-          {this.getCardContent()}
+         {this.getCardContent()}
         </div>
       </div>
     );

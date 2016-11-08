@@ -32,6 +32,7 @@ Rooms.schema = new SimpleSchema({
   joinedAmount: { type: Number, defaultValue: 0 },
   nickname: { type: String, max: 20 },
   sessionAmount: { type: Number, defaultValue: 0 },
+  roomcode: { type: String },
 });
 
 Rooms.attachSchema(Rooms.schema);
@@ -41,6 +42,9 @@ Rooms.publicFields = {
   createdBy: 1,
   joinedBy: 1,
   joinedAmount: 1,
+  nickname: 1,
+  sessionAmount: 1,
+  roomcode: 1,
 };
 
 Rooms.helpers({

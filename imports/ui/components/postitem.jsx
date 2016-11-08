@@ -32,7 +32,8 @@ export default class PostItem extends React.Component {
 
   getOpacity() {
     const voters = this.props.post.votedBy;
-    if (_.include(voters, Session.get('clientId'))) {
+    const id = Meteor.userId() || Session.get('client');
+    if (_.include(voters, id)) {
       return 1;
     }
     return 0.5;
@@ -41,7 +42,7 @@ export default class PostItem extends React.Component {
   upVote(e) {
     e.preventDefault();
     const postId = this.props.post._id;
-    const votedBy = Session.get('clientId');
+    const votedBy = Meteor.userId() || Session.get('client');
     upvote.call({ postId, votedBy }, (err, res) => {
       if (err) {
         console.log(err);
@@ -68,7 +69,7 @@ export default class PostItem extends React.Component {
         <span style={{ maxWidth: '70%' }} className="mdl-list__item-primary-content">
           <i className="material-icons mdl-list__item-avatar mdl-cell--hide-tablet mdl-cell--hide-phone">person</i>
           <span>{this.props.post.authorType}</span>
-          <span className="mdl-list__item-text-body" style={{ wordWrap: 'break-word' }}>
+          <span style={{ wordWrap: 'break-word' }}>
             {this.props.post.text}
           </span>
         </span>
@@ -92,3 +93,5 @@ export default class PostItem extends React.Component {
 PostItem.propTypes = {
   post: React.PropTypes.object,
 };
+
+

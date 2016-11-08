@@ -4,7 +4,7 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { upgrade, downgrade } from '../../../helpers/upgrade.jsx';
 import { Rooms } from '../../../../api/rooms/rooms.js';
 import { Accounts } from 'meteor/accounts-base';
-import { joinSession } from '../../../../api/sessions/methods.js';
+import { join } from '../../../../api/sessions/methods.js';
 import { Session } from 'meteor/session';
 
 export default class EnterLectureCard extends React.Component {
@@ -37,22 +37,24 @@ export default class EnterLectureCard extends React.Component {
       value: event.target.value,
     });
   }
+
   handleSubmit(e) {
     e.preventDefault();
-    if (this.state.value.length === 4) {
-      const code = this.state.value;
-      const userId = Session.get('clientId');
-      console.log(userId);
-      joinSession.call({ code, userId }, (err, res) => {
-        if (err) {
-          console.log(err);
-        } else {
-          const path = '/joinedsession/';
-          FlowRouter.go(path + res);
-        }
-      });
+    const par = {};
+    if (this.state.value.length > 0) {
+      par.sessionCode = this.state.value;
+      par.user = Session.get('client') || Meteor.userId();
     }
+
+    join.call(par, (err, res) => {
+      if (err) {
+        console.log(err);
+      } else {
+        FlowRouter.go('/joinedsession/' + res.session._id);
+      }
+    });
   }
+
   render() {
     return (
       <div>
@@ -68,7 +70,7 @@ export default class EnterLectureCard extends React.Component {
                 mdl-card__subtitle-text"
               style={{ paddingTop: '10px', marginTop: '10px' }}
             >
-              <h4>Go directly to a lecture</h4>
+              <h4>Enter single session</h4>
             </div>
           </div>
           <div className="mdl-card__actions">
@@ -83,8 +85,8 @@ export default class EnterLectureCard extends React.Component {
                   value={this.state.value}
                   onChange={this.handleChange}
                 />
-                <label className="mdl-textfield__label" htmlFor="sample2">PIN...</label>
-                <span className="mdl-textfield__error">entered pin is not a number!</span>
+                <label className="mdl-textfield__label" htmlFor="sample2">Code...</label>
+                <span className="mdl-textfield__error">Entered code is not a number!</span>
               </div>
             </form>
           </div>
